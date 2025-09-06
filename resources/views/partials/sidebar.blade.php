@@ -2,7 +2,7 @@
     <div class="logo position-relative">
         <a href="{{ url('/') }}" class="d-block text-decoration-none position-relative">
             <img src="/assets/images/logo-icon.png" alt="logo-icon" />
-            <span class="logo-text fw-bold text-dark">FarmaSys</span>
+            <span class="logo-text fw-bold text-dark">BenihBahagia</span>
         </a>
         <button
             class="sidebar-burger-menu bg-transparent p-0 border-0 opacity-0 z-n1 position-absolute top-50 end-0 translate-middle-y"
@@ -27,7 +27,7 @@
 
                 {{-- Master Data --}}
                 @php
-                    $masterdataChildren = ['masterdata/formulir', 'masterdata/pertanyaan'];
+                    $masterdataChildren = ['masterdata/formulir', 'masterdata/pertanyaan', 'masterdata/jawaban'];
                     $hasMasterdata = auth()
                         ->user()
                         ->permissions()
@@ -55,6 +55,15 @@
                                     <a href="{{ url('masterdata/pertanyaan') }}"
                                         class="menu-link {{ request()->is('masterdata/pertanyaan') ? 'active' : '' }}">
                                         Daftar Pertanyaan
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'masterdata/jawaban'))->exists())
+                                <li class="menu-item">
+                                    <a href="{{ url('masterdata/jawaban') }}"
+                                        class="menu-link {{ request()->is('masterdata/jawaban') ? 'active' : '' }}">
+                                        Daftar Jawaban
                                     </a>
                                 </li>
                             @endif
