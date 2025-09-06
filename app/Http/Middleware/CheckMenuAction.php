@@ -17,7 +17,7 @@ class CheckMenuAction
             ->whereHas('menu', fn($q) => $q->where('code', $menuCode))
             ->whereHas('action', fn($q) => $q->where('code', $actionCode))
             ->exists();
-        
+       
         if (!$hasAccess) {
             abort(403, "Anda tidak punya akses ke [$menuCode:$actionCode]");
         }

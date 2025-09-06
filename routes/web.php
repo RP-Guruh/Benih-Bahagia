@@ -4,21 +4,24 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\Setting\{MenuController,MenuActionController};
 use App\Http\Controllers\Typesense\{GlobalSearchController};
 use App\Http\Controllers\HakAkses\{LevelController, LevelPermissionController};
+use App\Http\Controllers\MasterData\{FormulirController, PertanyaanController};
+
+use App\Http\Controllers\LandingPage\LandingController;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', [App\Http\Controllers\LandingPage\LandingController::class, 'index'])->name('landing_page');
+Route::get('/', function () {
+    if (Auth::check()) {
+        return view('dashboard.dashboard');
+    } else {
+        return app(LandingController::class)->index();
+    }
+})->name('home');
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/', function () {
-    //     return view('dashboard.dashboard');
-    // });
-
     Route::get('/test', [TestController::class, 'index'])->middleware('can-access:test,view');
     Route::get('/global-search', [GlobalSearchController::class, 'search']);
-
-
 
     Route::prefix('settings')->group(function () {
         Route::get('menu/datatable', [MenuController::class, 'datatable'])->name('settings.menu.datatable');
@@ -30,9 +33,15 @@ Route::middleware('auth')->group(function () {
     Route::prefix('access')->group(function () {
         Route::get('level/datatable', [LevelController::class, 'datatable'])->name('access.level.datatable');
         Route::resource('level', LevelController::class)->names('access.level');
-
         Route::get('permission/datatable', [LevelPermissionController::class, 'datatable'])->name('access.permission.datatable');
         Route::resource('permission', LevelPermissionController::class)->names('access.permission');
+    });
+    
+    Route::prefix('masterdata')->group(function () {
+        Route::get('formulir/datatable', [FormulirController::class, 'datatable'])->name('masterdata.formulir.datatable');
+        Route::resource('formulir', FormulirController::class)->names('masterdata.formulir');
+        Route::get('pertanyaan/datatable', [PertanyaanController::class, 'datatable'])->name('masterdata.pertanyaan.datatable');
+        Route::resource('pertanyaan', PertanyaanController::class)->names('masterdata.pertanyaan');
     });
 
 });
