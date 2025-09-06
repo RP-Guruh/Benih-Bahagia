@@ -46,6 +46,13 @@ return [
         'delete'  => ['destroy'],
     ],
 
+    'masterdata/jawaban' => [
+        'view'    => ['index','show'],
+        'create'  => ['create','store'],
+        'update'    => ['edit','update'],
+        'delete'  => ['destroy'],
+    ],
+
 
 
 

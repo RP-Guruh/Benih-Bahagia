@@ -4,8 +4,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\Setting\{MenuController,MenuActionController};
 use App\Http\Controllers\Typesense\{GlobalSearchController};
 use App\Http\Controllers\HakAkses\{LevelController, LevelPermissionController};
-use App\Http\Controllers\MasterData\{FormulirController, PertanyaanController};
-
+use App\Http\Controllers\MasterData\{FormulirController, PertanyaanController, JawabanController};
 use App\Http\Controllers\LandingPage\LandingController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +41,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('formulir', FormulirController::class)->names('masterdata.formulir');
         Route::get('pertanyaan/datatable', [PertanyaanController::class, 'datatable'])->name('masterdata.pertanyaan.datatable');
         Route::resource('pertanyaan', PertanyaanController::class)->names('masterdata.pertanyaan');
+        Route::get('jawaban/datatable', [JawabanController::class, 'datatable'])->name('masterdata.jawaban.datatable');
+        Route::resource('jawaban', JawabanController::class)->names('masterdata.jawaban');
+        
     });
 
 });
