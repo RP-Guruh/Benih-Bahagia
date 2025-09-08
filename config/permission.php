@@ -75,6 +75,15 @@ return [
         'delete'  => ['destroy'],
     ],
 
+    // Skrinning
+    'skrinning/siswa' => [
+        'view'    => ['index','show'],
+        'create'  => ['create','store'],
+        'update'    => ['edit','update'],
+        'delete'  => ['destroy'],
+        'print'  => ['print'],
+    ],
+
 
 
 

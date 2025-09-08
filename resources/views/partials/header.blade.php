@@ -45,7 +45,7 @@
             <img class="rounded-circle wh-40 administrator" src="/assets/images/administrator.jpg" alt="admin" />
             <!-- Nama hanya muncul di layar besar -->
             <div class="d-none d-sm-block ms-2">
-                <h3 class="mb-0 fs-14 fw-semibold">Olivia</h3>
+                <h3 class="mb-0 fs-14 fw-semibold">{{ auth()->user()->name }}</h3>
             </div>
         </div>
 
@@ -53,19 +53,13 @@
             <div class="d-flex align-items-center info p-2">
                 <img class="rounded-circle wh-30 administrator" src="/assets/images/administrator.jpg" alt="admin" />
                 <div class="ms-2">
-                    <h3 class="fw-medium mb-0">Olivia John</h3>
-                    <span class="fs-12 text-muted">Marketing Manager</span>
+                    <h3 class="fw-medium mb-0">{{ auth()->user()->name }}</h3>
+                    <span class="fs-12 text-muted">{{ auth()->user()->email }}</span>
                 </div>
             </div>
             <hr class="my-1">
             <a class="dropdown-item d-flex align-items-center" href="my-profile.html">
                 <i class="material-symbols-outlined">account_circle</i><span class="ms-2">My Profile</span>
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="chat.html">
-                <i class="material-symbols-outlined">chat</i><span class="ms-2">Messages</span>
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="settings.html">
-                <i class="material-symbols-outlined">settings</i><span class="ms-2">Settings</span>
             </a>
             <a class="dropdown-item d-flex align-items-center" href="login.html">
                 <i class="material-symbols-outlined">logout</i><span class="ms-2">Logout</span>

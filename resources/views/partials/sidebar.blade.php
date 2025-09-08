@@ -1,15 +1,15 @@
 <div class="sidebar-area" id="sidebar-area">
-    <div class="logo position-relative">
-        <a href="{{ url('/') }}" class="d-block text-decoration-none position-relative">
-            <img src="/assets/images/logo-icon.png" alt="logo-icon" />
-            <span class="logo-text fw-bold text-dark">BenihBahagia</span>
-        </a>
-        <button
-            class="sidebar-burger-menu bg-transparent p-0 border-0 opacity-0 z-n1 position-absolute top-50 end-0 translate-middle-y"
-            id="sidebar-burger-menu">
-            <i data-feather="x"></i>
-        </button>
-    </div>
+<div class="logo position-relative">
+                <a href="index.html" class="d-block text-decoration-none position-relative">
+                    <img src="{{ asset('assets/images/logo-icon.png') }}" alt="logo-icon">
+                    <span class="logo-text fw-bold text-dark">Benih Bahagia</span>
+                </a>
+                <button class="sidebar-burger-menu bg-transparent p-0 border-0 opacity-0 z-n1 position-absolute top-50 end-0 translate-middle-y" id="sidebar-burger-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+
 
     <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar>
         <ul class="menu-inner">
@@ -22,187 +22,85 @@
                 </a>
             </li>
 
+            @if(auth()->check())
+                {{-- Loop menu sesuai permission --}}
+                @foreach([
+                    'Master Data' => [
+                        'icon' => 'database',
+                        'children' => [
+                            ['code'=>'masterdata/formulir','title'=>'Formulir','url'=>'masterdata/formulir'],
+                            ['code'=>'masterdata/pertanyaan','title'=>'Daftar Pertanyaan','url'=>'masterdata/pertanyaan'],
+                            ['code'=>'masterdata/jawaban','title'=>'Daftar Jawaban','url'=>'masterdata/jawaban'],
+                        ]
+                    ],
+                    'Settings' => [
+                        'icon'=>'settings',
+                        'children'=>[
+                            ['code'=>'settings/menu','title'=>'Menu','url'=>'settings/menu'],
+                            ['code'=>'settings/menu_action','title'=>'Menu Actions','url'=>'settings/menu_action'],
+                        ]
+                    ],
+                    'Edukasi' => [
+                        'icon'=>'emoji_objects',
+                        'children'=>[
+                            ['code'=>'content/article','title'=>'Article','url'=>'content/article'],
+                            ['code'=>'content/category','title'=>'Category','url'=>'content/category'],
+                            ['code'=>'content/video','title'=>'Video','url'=>'content/video'],
+                        ]
+                    ],
+                    'Hak Akses' => [
+                        'icon'=>'settings_accessibility',
+                        'children'=>[
+                            ['code'=>'access/user','title'=>'Auth User','url'=>'access/user'],
+                            ['code'=>'access/permission','title'=>'Hak Akses','url'=>'access/permission'],
+                            ['code'=>'access/level','title'=>'Level','url'=>'access/level'],
+                        ]
+                    ],
+                    'Skrinning' => [
+                        'icon'=>'diversity_1',
+                        'children'=>[
+                            ['code'=>'skrinning/siswa','title'=>'Skrinning Siswa','url'=>'skrinning/siswa'],
+                        ]
+                    ],
+                ] as $menuTitle => $menuData)
 
-            @if (auth()->check())
+                    @php
+                        $childrenCodes = array_column($menuData['children'], 'code');
+                        $hasMenu = auth()->user()->permissions()
+                            ->whereHas('menu', fn($q) => $q->whereIn('code', $childrenCodes))
+                            ->exists();
 
-                {{-- Master Data --}}
-                @php
-                    $masterdataChildren = ['masterdata/formulir', 'masterdata/pertanyaan', 'masterdata/jawaban'];
-                    $hasMasterdata = auth()
-                        ->user()
-                        ->permissions()
-                        ->whereHas('menu', fn($q) => $q->whereIn('code', $masterdataChildren))
-                        ->exists();
-                @endphp
-                @if ($hasMasterdata)
+                      
+                        $childUrls = array_map(fn($c) => $c['url'].'*', $menuData['children']);
+                    @endphp
 
-                    <li class="menu-item {{ request()->is('masterdata/*') ? 'open' : '' }}">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <span class="material-symbols-outlined menu-icon">database</span>
-                            <span class="title">Master Data</span>
-                        </a>
-                        <ul class="menu-sub">
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'masterdata/formulir'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('masterdata/formulir') }}"
-                                        class="menu-link {{ request()->is('masterdata/formulir') ? 'active' : '' }}">
-                                        Formulir
-                                    </a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'masterdata/pertanyaan'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('masterdata/pertanyaan') }}"
-                                        class="menu-link {{ request()->is('masterdata/pertanyaan') ? 'active' : '' }}">
-                                        Daftar Pertanyaan
-                                    </a>
-                                </li>
-                            @endif
+                    @if($hasMenu)
+                        <li class="menu-item {{ request()->is(...$childUrls) ? 'open' : '' }}">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <span class="material-symbols-outlined menu-icon">{{ $menuData['icon'] }}</span>
+                                <span class="title">{{ $menuTitle }}</span>
+                            </a>
+                            <ul class="menu-sub">
+                                @foreach($menuData['children'] as $child)
+                                    @if(auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code',$child['code']))->exists())
+                                        <li class="menu-item">
+                                            <a href="{{ url($child['url']) }}" class="menu-link {{ request()->is($child['url'].'*') ? 'active' : '' }}">
+                                                {{ $child['title'] }}
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
+                @endforeach
 
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'masterdata/jawaban'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('masterdata/jawaban') }}"
-                                        class="menu-link {{ request()->is('masterdata/jawaban') ? 'active' : '' }}">
-                                        Daftar Jawaban
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </li>
-                @endif
-
-                {{-- Settings --}}
-                @php
-                    $settingsChildren = ['settings/menu', 'settings/menu_action'];
-                    $hasSettings = auth()
-                        ->user()
-                        ->permissions()
-                        ->whereHas('menu', fn($q) => $q->whereIn('code', $settingsChildren))
-                        ->exists();
-                @endphp
-                @if ($hasSettings)
-                    <li class="menu-item {{ request()->is('settings/*') ? 'open' : '' }}">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <span class="material-symbols-outlined menu-icon">settings</span>
-                            <span class="title">Settings</span>
-                        </a>
-                        <ul class="menu-sub">
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'settings/menu'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('settings/menu') }}"
-                                        class="menu-link {{ request()->is('settings/menu') ? 'active' : '' }}">
-                                        Menu
-                                    </a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'settings/menu_action'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('settings/menu_action') }}"
-                                        class="menu-link {{ request()->is('settings/menu_action') ? 'active' : '' }}">
-                                        Menu Actions
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </li>
-                @endif
-
-                <!-- Content -->
-                @php
-                    $contentChildren = ['content/article', 'content/video', 'content/category'];
-                    $hasContent = auth()
-                        ->user()
-                        ->permissions()
-                        ->whereHas('menu', fn($q) => $q->whereIn('code', $contentChildren))
-                        ->exists();
-                @endphp
-                @if ($hasContent)
-                    <li class="menu-item {{ request()->is('content/*') ? 'open' : '' }}">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <span class="material-symbols-outlined">emoji_objects</span>
-                            <span class="title">Edukasi</span>
-                        </a>
-                        <ul class="menu-sub">
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'content/article'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('content/article') }}"
-                                        class="menu-link {{ request()->is('content/article') ? 'active' : '' }}">
-                                        Article
-                                    </a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'content/category'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('content/category') }}"
-                                        class="menu-link {{ request()->is('content/category') ? 'active' : '' }}">
-                                        Category
-                                    </a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'content/video'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('content/video') }}"
-                                        class="menu-link {{ request()->is('content/video') ? 'active' : '' }}">
-                                        Video
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </li>
-                @endif
-
-                {{-- Hak Akses --}}
-                @php
-                    $accessChildren = ['access/user', 'access/permission', 'access/level'];
-                    $hasAccess = auth()
-                        ->user()
-                        ->permissions()
-                        ->whereHas('menu', fn($q) => $q->whereIn('code', $accessChildren))
-                        ->exists();
-                @endphp
-                @if ($hasAccess)
-                    <li class="menu-item {{ request()->is('access/*') ? 'open' : '' }}">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <span class="material-symbols-outlined">settings_accessibility</span>
-                            <span class="title">Hak Akses</span>
-                        </a>
-                        <ul class="menu-sub">
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'access/user'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('access/user') }}"
-                                        class="menu-link {{ request()->is('access/user') ? 'active' : '' }}">
-                                        Auth User
-                                    </a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'access/permission'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('access/permission') }}"
-                                        class="menu-link {{ request()->is('access/permission') ? 'active' : '' }}">
-                                        Hak Akses
-                                    </a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'access/level'))->exists())
-                                <li class="menu-item">
-                                    <a href="{{ url('access/level') }}"
-                                        class="menu-link {{ request()->is('access/level') ? 'active' : '' }}">
-                                        Level
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </li>
-                @endif
-            @endif
-
-            {{-- Logout --}}
-            @if (auth()->check())
+                {{-- Logout --}}
                 <li class="menu-item">
                     <form action="{{ route('logout') }}" method="POST" id="logout-form">
                         @csrf
                         <a href="#" class="menu-link logout"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <span class="material-symbols-outlined menu-icon">logout</span>
                             <span class="title">Logout</span>
                         </a>

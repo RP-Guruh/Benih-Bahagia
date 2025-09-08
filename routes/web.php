@@ -6,6 +6,7 @@ use App\Http\Controllers\Typesense\{GlobalSearchController};
 use App\Http\Controllers\HakAkses\{LevelController, LevelPermissionController};
 use App\Http\Controllers\MasterData\{FormulirController, PertanyaanController, JawabanController};
 use App\Http\Controllers\Content\{ArticleController, CategoryController, VideoController};
+use App\Http\Controllers\Skrinning\{SkrinningController};
 use App\Http\Controllers\LandingPage\LandingController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,14 @@ Route::middleware('auth')->group(function () {
         
         Route::get('video/datatable', [VideoController::class, 'datatable'])->name('content.video.datatable');
         Route::resource('video', VideoController::class)->names('content.video');
+    });
+
+    Route::prefix('skrinning')->group(function () {
+        Route::get('siswa/datatable', [SkrinningController::class, 'datatable'])->name('skrinning.siswa.datatable');
+        Route::get('siswa/formulir/{usia}', [SkrinningController::class, 'formulir'])->name('skrinning.siswa.formulir');
+        
+        Route::resource('siswa', SkrinningController::class)->names('skrinning.siswa');
+
     });
 
 });
