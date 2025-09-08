@@ -5,7 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
     <title>Benih Bahagia</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/iconBenih.ico') }}?v=2">
+
     <!-- Styles -->
     @include('partials.styles')
 
