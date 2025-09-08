@@ -5,6 +5,7 @@ use App\Http\Controllers\Setting\{MenuController,MenuActionController};
 use App\Http\Controllers\Typesense\{GlobalSearchController};
 use App\Http\Controllers\HakAkses\{LevelController, LevelPermissionController};
 use App\Http\Controllers\MasterData\{FormulirController, PertanyaanController, JawabanController};
+use App\Http\Controllers\Content\{ArticleController, CategoryController, VideoController};
 use App\Http\Controllers\LandingPage\LandingController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +44,18 @@ Route::middleware('auth')->group(function () {
         Route::resource('pertanyaan', PertanyaanController::class)->names('masterdata.pertanyaan');
         Route::get('jawaban/datatable', [JawabanController::class, 'datatable'])->name('masterdata.jawaban.datatable');
         Route::resource('jawaban', JawabanController::class)->names('masterdata.jawaban');
+    });
+
+    Route::prefix('content')->group(function () {
+        Route::get('category/datatable', [CategoryController::class, 'datatable'])->name('content.category.datatable');
+        Route::resource('category', CategoryController::class)->names('content.category');
+
+        Route::post('article/upload-image', [ArticleController::class, 'uploadImage'])->name('content.article.upload');
+        Route::get('article/datatable', [ArticleController::class, 'datatable'])->name('content.article.datatable');
+        Route::resource('article', ArticleController::class)->names('content.article');
         
+        Route::get('video/datatable', [VideoController::class, 'datatable'])->name('content.video.datatable');
+        Route::resource('video', VideoController::class)->names('content.video');
     });
 
 });

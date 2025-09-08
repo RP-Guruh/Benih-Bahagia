@@ -53,6 +53,28 @@ return [
         'delete'  => ['destroy'],
     ],
 
+    // Content
+    'content/article' => [
+        'view'    => ['index','show'],
+        'create'  => ['create','store'],
+        'update'    => ['edit','update'],
+        'delete'  => ['destroy'],
+    ],
+
+    'content/category' => [
+        'view'    => ['index','show'],
+        'create'  => ['create','store'],
+        'update'    => ['edit','update'],
+        'delete'  => ['destroy'],
+    ],
+
+    'content/video' => [
+        'view'    => ['index','show'],
+        'create'  => ['create','store'],
+        'update'    => ['edit','update'],
+        'delete'  => ['destroy'],
+    ],
+
 
 
 

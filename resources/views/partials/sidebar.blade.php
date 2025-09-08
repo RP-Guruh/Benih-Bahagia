@@ -107,6 +107,50 @@
                     </li>
                 @endif
 
+                <!-- Content -->
+                @php
+                    $contentChildren = ['content/article', 'content/video', 'content/category'];
+                    $hasContent = auth()
+                        ->user()
+                        ->permissions()
+                        ->whereHas('menu', fn($q) => $q->whereIn('code', $contentChildren))
+                        ->exists();
+                @endphp
+                @if ($hasContent)
+                    <li class="menu-item {{ request()->is('content/*') ? 'open' : '' }}">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <span class="material-symbols-outlined">emoji_objects</span>
+                            <span class="title">Edukasi</span>
+                        </a>
+                        <ul class="menu-sub">
+                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'content/article'))->exists())
+                                <li class="menu-item">
+                                    <a href="{{ url('content/article') }}"
+                                        class="menu-link {{ request()->is('content/article') ? 'active' : '' }}">
+                                        Article
+                                    </a>
+                                </li>
+                            @endif
+                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'content/category'))->exists())
+                                <li class="menu-item">
+                                    <a href="{{ url('content/category') }}"
+                                        class="menu-link {{ request()->is('content/category') ? 'active' : '' }}">
+                                        Category
+                                    </a>
+                                </li>
+                            @endif
+                            @if (auth()->user()->permissions()->whereHas('menu', fn($q) => $q->where('code', 'content/video'))->exists())
+                                <li class="menu-item">
+                                    <a href="{{ url('content/video') }}"
+                                        class="menu-link {{ request()->is('content/video') ? 'active' : '' }}">
+                                        Video
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+
                 {{-- Hak Akses --}}
                 @php
                     $accessChildren = ['access/user', 'access/permission', 'access/level'];
