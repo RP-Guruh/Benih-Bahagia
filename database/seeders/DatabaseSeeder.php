@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             LevelSeeder::class,
             UserSeeder::class,
             LevelMenuActionSeeder::class,
+            FormulirSeeder::class,
         ]);
 
     }

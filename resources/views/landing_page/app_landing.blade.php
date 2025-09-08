@@ -1,90 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zxx">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Benih Bahagia - Pantau Tumbuh Kembang Anak')</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Vendor CSS -->
-     <link rel="stylesheet" type="text/css" href="{{ asset('assets/landing_page/css/vendor.css') }}">
- <link rel="stylesheet" type="text/css" href="{{ asset('assets/landing_page/css/styles.css') }}">
+    <!-- Links Of CSS File -->
+    <link rel="stylesheet" href="{{ asset('assets/css/sidebar-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/simplebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/apexcharts.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/prism.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/rangeslider.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sweetalert.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/quill.snow.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/google-icon.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/jsvectormap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/lightpick.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('assets/landing_page/images/favicon.png') }}">
 
-    <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- Google fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+     <style>
 
-    <!-- Custom Style -->
-  
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        .baloo-2-logo {
+            font-family: "Baloo 2", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
 
-    <!-- Script -->
-    <script src="{{ asset('assets/landing_page/js/modernizr.js') }}"></script>
+        .baloo-2 {
+            font-family: "Baloo 2", sans-serif;
+            font-optical-sizing: auto;
+        }
 
-    @stack('styles')
-</head>
-
-<body data-bs-spy="scroll" data-bs-target="#header-nav" tabindex="0">
-
-    
-    @include('landing_page.partials.header')
-    @include('landing_page.partials.hero')
-    @include('landing_page.partials.article')
-    @include('landing_page.partials.video')
-    @include('landing_page.partials.about')
-    @include('landing_page.partials.footer')
-    
-    @yield('content')
-    @stack('scripts')
-    <script src="{{ asset('assets/landing_page/js/jquery-1.11.0.min.js') }}"></script>
-    <script src="{{ asset('assets/landing_page/js/plugins.js') }}"></script>
-    <script src="{{ asset('assets/landing_page/js/script.js') }}"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
-<script>
-  const videoSwiper = new Swiper('.video-swiper', {
-    slidesPerView: 1,
-    spaceBetween: 20,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-      768: { slidesPerView: 2 }, 
-      992: { slidesPerView: 3 }  
+            .partner-img {
+        max-height: 100px; /* ukuran logo */
+        width: auto;
+        filter: grayscale(100%);
+        transition: filter 0.3s ease, transform 0.3s ease;
     }
-  });
-</script>
+    .partner-logo {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 30px 20px; /* tambah ruang atas-bawah */
+    }
+    .partner-logo:hover {
+        transform: translateY(-6px) scale(1.08);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+    }
+    .partner-logo:hover .partner-img {
+        filter: grayscale(0%);
+        transform: scale(1.05);
+    }
 
+       .edu-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    .edu-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .edu-thumb {
+        position: relative;
+        overflow: hidden;
+    }
+    .edu-thumb img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .edu-card:hover .edu-thumb img {
+        transform: scale(1.08);
+    }
+    .edu-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: rgba(0,0,0,0.7);
+        color: #fff;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 12px;
+    }
+    .edu-content {
+        padding: 20px;
+        flex: 1;
+    }
+    .edu-content h5 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+    .edu-content p {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 0;
+    }
+    /* spacing antar section biar lega */
+    .py-120 {
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+    .edu-video-area iframe {
+        border: 0;
+    }
 
-<script>
-  var scrollSpy = new bootstrap.ScrollSpy(document.body, {
-    target: '#header-nav',
-    offset: 100
-  })
-</script>
+    /* Responsif biar logo nggak kegedean di layar kecil */
+    @media (max-width: 576px) {
+        .partner-img {
+            max-height: 70px;
+        }
+        .partner-logo {
+            padding: 20px 15px; /* lebih kecil di HP */
+        }
+    }
 
+    .footer-area {
+        background: #1d1f27;
+    }
+    .footer-single h5 {
+        font-size: 18px;
+        color: #fff;
+    }
+    .footer-single a:hover {
+        color: #fff !important;
+    }
+    .footer-logo img {
+        max-height: 55px;
+    }
+    .hover:hover {
+        color: #0d6efd !important;
+    }
+     </style>
 
+    <!-- Title -->
+    <title>Trezo - Bootstrap 5 Admin Dashboard Template</title>
+</head>
+<body data-bs-spy="scroll"
+      data-bs-target="#navbar-example2"
+      data-bs-root-margin="0px 0px -40%"
+      data-bs-smooth-scroll="true"
+      class="scrollspy-example"
+      tabindex="0">
+
+    <!-- Header -->
+    @include('landing_page.partials.header')
+    <!-- Hero Section -->
+    @include('landing_page.partials.hero')
+    <!-- Asosiasi Section -->
+    @include('landing_page.partials.asosiasi')
+    <!-- Key Features Section -->
+    @include('landing_page.partials.key')
+    <!-- About App Section -->
+    @include('landing_page.partials.about_app')
+    <!-- Edukasi section -->
+    @include('landing_page.partials.article')
+    <!-- footer -->
+    @include('landing_page.partials.footer')
+
+    @yield('content')
+
+    <!-- JS Files -->
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sidebar-menu.js') }}"></script>
+    <script src="{{ asset('assets/js/dragdrop.js') }}"></script>
+    <script src="{{ asset('assets/js/rangeslider.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
+    <script src="{{ asset('assets/js/quill.min.js') }}"></script>
+    <script src="{{ asset('assets/js/data-table.js') }}"></script>
+    <script src="{{ asset('assets/js/prism.js') }}"></script>
+    <script src="{{ asset('assets/js/clipboard.min.js') }}"></script>
+    <script src="{{ asset('assets/js/feather.min.js') }}"></script>
+    <script src="{{ asset('assets/js/simplebar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/js/echarts.js') }}"></script>
+    <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/fullcalendar.main.js') }}"></script>
+    <script src="{{ asset('assets/js/jsvectormap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/world-merc.js') }}"></script>
+    <script src="{{ asset('assets/js/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lightpick.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apexcharts.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/echarts.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/custom.js') }}"></script>
+
+    @stack('scripts')
 </body>
-
-
-
 </html>

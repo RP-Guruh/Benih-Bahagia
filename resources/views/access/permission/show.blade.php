@@ -10,6 +10,7 @@
             <div class="card-body p-4">
                 <h4 class="mb-3">Permission List</h4>
                 <div class="default-table-area style-two default-table-width">
+                
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
