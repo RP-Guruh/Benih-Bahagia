@@ -50,4 +50,9 @@ class HasilSkrinning extends Model
     {
         return $this->belongsTo(Jawaban::class, 'jawaban_id');
     }
+
+    public function guru()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

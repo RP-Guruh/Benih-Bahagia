@@ -18,6 +18,8 @@
     @stack('styles')
     <style>
 
+    
+
         #search-results .search-link {
             display: flex;
             justify-content: space-between;

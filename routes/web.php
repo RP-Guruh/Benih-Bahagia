@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        return view('dashboard.dashboard');
-    } else {
-        return app(LandingController::class)->index();
-    }
-})->name('home');
+   return app(LandingController::class)->index();
+});
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('dashboard.dashboard');
+    })->name('dashboard');
     Route::get('/test', [TestController::class, 'index'])->middleware('can-access:test,view');
     Route::get('/global-search', [GlobalSearchController::class, 'search']);
 
@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('skrinning')->group(function () {
+        Route::get('siswa/print/{id}', [SkrinningController::class, 'print'])->name('skrinning.siswa.print');
+        
         Route::get('siswa/datatable', [SkrinningController::class, 'datatable'])->name('skrinning.siswa.datatable');
         Route::get('siswa/formulir/{usia}', [SkrinningController::class, 'formulir'])->name('skrinning.siswa.formulir');
         

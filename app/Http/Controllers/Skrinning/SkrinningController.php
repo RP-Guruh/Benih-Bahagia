@@ -9,7 +9,7 @@ use App\Helpers\PermissionHelper;
 use App\Models\Formulir;
 use App\Models\Jawaban;
 use App\Models\Pertanyaan;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
 use App\Models\HasilSkrinning;
@@ -76,22 +76,19 @@ class SkrinningController extends Controller
             $birth  = Carbon::parse($tanggal_lahir);
             $today  = Carbon::today();
 
-            $usia_bulan = (int) $birth->diffInMonths($today);
+            // Hitung selisih langsung
+            $diff = $birth->diff($today);
 
-            $sisa_hari  = $today->day - $birth->day;
+            $usia_bulan = $diff->y * 12 + $diff->m; // total bulan
+            $sisa_hari  = $diff->d;                  // sisa hari
 
-            if ($sisa_hari < 0) {
-                $usia_bulan -= 1;
-
-                $sisa_hari = $birth->copy()->addMonths($usia_bulan)->diffInDays($today);
-            }
             // format usia aktual
             $usia_aktual = $usia_bulan . ' bulan ' . $sisa_hari . ' hari';
 
             // pembulatan bulan jika sisa hari > 17
             $usia_pembulatan = ($sisa_hari > 17) ? $usia_bulan + 1 : $usia_bulan;
 
-
+          
             $jawaban = $request->except([
                 '_token', 
                 'nama_siswa', 
@@ -101,19 +98,26 @@ class SkrinningController extends Controller
                 'formulir_id'
             ]);
             
-           
-            $jawaban = $request->jawaban ?? []; // misalnya datang dari form
+            $bobot_pertanyaan = Pertanyaan::where('formulir_id', $formulir_id)
+                ->pluck('bobot_nilai', 'id')
+                ->toArray();
 
-           
-            $bersih = array_filter($jawaban, fn($v) => is_string($v) || is_int($v));
+            $jawaban = $request->jawaban ?? []; // misal: [1=>'ya', 2=>'tidak', ...]
+            $total_ya = 0;
+            $total_tidak = 0;
 
-            $hitung = array_count_values($bersih);
+            foreach ($jawaban as $pertanyaan_id => $jawaban_val) {
+                $bobot = $bobot_pertanyaan[$pertanyaan_id] ?? 0;
 
-            $total_ya = $hitung['ya'] ?? 0;
-            $total_tidak = $hitung['tidak'] ?? 0;
-
+                if ($jawaban_val === 'ya') {
+                    $total_ya += $bobot;
+                } elseif ($jawaban_val === 'tidak') {
+                    $total_tidak += $bobot;
+                }
+            }
+            
             $jawaban_id = Jawaban::where('nilai_min', '<=', $total_ya)->where('nilai_max', '>=', $total_ya)->first();
-         
+           
             HasilSkrinning::create([
                 'nama_siswa'      => $nama_siswa,
                 'nama_orangtua'   => $nama_orangtua,
@@ -143,6 +147,21 @@ class SkrinningController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+    }
+
+    public function show($id)
+    {
+        $hasil = HasilSkrinning::with(['formulir', 'evaluasi.intervensiRows', 'guru'])->findOrFail($id);
+        return view('skrinning.siswa.show', compact('hasil'));
+    }
+
+    public function print($id)
+    {
+         $hasil = HasilSkrinning::with(['formulir', 'evaluasi.intervensiRows', 'guru'])->findOrFail($id);
+        $pdf = Pdf::loadView('skrinning.siswa.pdf', compact('hasil'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->stream('hasil_skrinning_'.$hasil->id.'.pdf');
     }
 
 }

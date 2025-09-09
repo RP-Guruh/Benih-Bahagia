@@ -32,8 +32,6 @@
             ['label'=>'Murid','data'=>'nama_siswa'],
             ['label'=>'Orang Tua','data'=>'nama_orangtua'],
             ['label'=>'Tanggal lahir','data'=>'tanggal_lahir'],
-            ['label'=>'Usia','data'=>'usia_aktual'],
-            ['label'=>'Usia pembulatan (bulan)','data'=>'usia_pembulatan'],
             ['label'=>'Form Skrinning','data'=>'formulir.judul'],
             ['label'=>'Skor didapat','data'=>'total_skor'],
             

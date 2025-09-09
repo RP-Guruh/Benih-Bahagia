@@ -33,7 +33,7 @@ class PertanyaanSeeder extends Seeder
                 'kategori' => 'Sosialisasi dan kemandirian',
                 'tipe_jawaban' => 'Ya/Tidak',
                 'bobot_nilai' => 1,
-                'petunjuk_gambar' => null,
+                'petunjuk_gambar' => 'pertanyaan/petunjuk_gambar/1757130078_1.png',
                 'created_at' => '2025-09-08 21:53:44',
                 'updated_at' => '2025-09-08 21:53:44',
             ],

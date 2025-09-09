@@ -130,19 +130,27 @@
 
     const birth = new Date(tgl_lahir);
     const today = new Date();
+
     let months = (today.getFullYear() - birth.getFullYear()) * 12;
-    
-    months -= birth.getMonth();
-    months += today.getMonth();
-    let daysDiff = today.getDate() - birth.getDate();
-    if (daysDiff > 17) months += 1;
-    const umur_aktual = `${months} bulan ${daysDiff} hari`;
+    months += today.getMonth() - birth.getMonth();
+
+    let days = today.getDate() - birth.getDate();
+    if (days < 0) {
+        months -= 1; 
+        // hitung jumlah hari di bulan sebelumnya
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+
+    const umur_aktual = `${months} bulan ${days} hari`;
+    const umur_pembulatan = (days > 17) ? months + 1 : months;
+
    
-    siswaData = { nama_siswa, nama_orangtua, tgl_lahir, umur_bulan: months, umur_aktual: umur_aktual };
+    siswaData = { nama_siswa, nama_orangtua, tgl_lahir, umur_bulan: umur_pembulatan, umur_aktual: umur_aktual };
     document.getElementById("umur_hari").value = months;
 
     // load formulir sesuai umur
-    fetch(`/skrinning/siswa/formulir/${months}`)
+    fetch(`/skrinning/siswa/formulir/${umur_pembulatan}`)
       .then((res) => res.json())
       .then((data) => {
         formulirData = data;
@@ -229,12 +237,18 @@
         </div>
     `;
 
+    const tglLahir = new Date(siswaData.tgl_lahir);
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const tglReadable = tglLahir.toLocaleDateString('id-ID', options); // format Indonesia
+
+// Tampilkan di HTML
     // Card info siswa
     reviewHtml += `
         <div class="card mb-3 p-3 shadow-sm">
             <p><strong>Nama Siswa:</strong> ${siswaData.nama_siswa}</p>
             <p><strong>Nama Orang Tua:</strong> ${siswaData.nama_orangtua}</p>
-            <p><strong>Tanggal Lahir:</strong> ${siswaData.tgl_lahir}</p>
+            <p><strong>Tanggal Lahir:</strong> ${tglReadable}</p>
             <p><strong>Usia Aktual :</strong> ${siswaData.umur_aktual}</p>
             <p><strong>Usia setelah pembulatan :</strong> ${siswaData.umur_bulan} bulan</p>
             

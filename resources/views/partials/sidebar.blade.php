@@ -1,6 +1,6 @@
 <div class="sidebar-area" id="sidebar-area">
 <div class="logo position-relative">
-                <a href="index.html" class="d-block text-decoration-none position-relative">
+                <a href="{{ url('/') }}" class="d-block text-decoration-none position-relative">
                     <img src="{{ asset('assets/images/logo-icon.png') }}" alt="logo-icon">
                     <span class="logo-text fw-bold text-dark">Benih Bahagia</span>
                 </a>
@@ -16,7 +16,7 @@
 
             {{-- Dashboard --}}
             <li class="menu-item">
-                <a href="{{ url('/') }}" class="menu-link {{ request()->is('/') ? 'active' : '' }}">
+                <a href="{{ url('/dashboard') }}" class="menu-link {{ request()->is('/dashboard') ? 'active' : '' }}">
                     <span class="material-symbols-outlined menu-icon">dashboard</span>
                     <span class="title">Dashboard</span>
                 </a>
