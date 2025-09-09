@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             LevelMenuActionSeeder::class,
             FormulirSeeder::class,
+            PertanyaanSeeder::class,
         ]);
 
     }

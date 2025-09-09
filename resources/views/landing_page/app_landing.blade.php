@@ -150,7 +150,7 @@
      </style>
 
     <!-- Title -->
-    <title>Trezo - Bootstrap 5 Admin Dashboard Template</title>
+    <title>Benih Bahagia</title>
 </head>
 <body data-bs-spy="scroll"
       data-bs-target="#navbar-example2"

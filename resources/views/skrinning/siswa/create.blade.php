@@ -93,6 +93,7 @@
         action="{{ route('skrinning.siswa.store') }}"
         method="POST"
         id="formStep3"
+        class="form_save"
       >
         @csrf
         <input type="hidden" name="nama_siswa" />
@@ -127,16 +128,17 @@
     const nama_orangtua = form.nama_orangtua.value;
     const tgl_lahir = form.tgl_lahir.value;
 
-    // hitung umur dalam bulan (pembulatan 17 hari ke atas)
     const birth = new Date(tgl_lahir);
     const today = new Date();
     let months = (today.getFullYear() - birth.getFullYear()) * 12;
+    
     months -= birth.getMonth();
     months += today.getMonth();
     let daysDiff = today.getDate() - birth.getDate();
     if (daysDiff > 17) months += 1;
-
-    siswaData = { nama_siswa, nama_orangtua, tgl_lahir, umur_bulan: months };
+    const umur_aktual = `${months} bulan ${daysDiff} hari`;
+   
+    siswaData = { nama_siswa, nama_orangtua, tgl_lahir, umur_bulan: months, umur_aktual: umur_aktual };
     document.getElementById("umur_hari").value = months;
 
     // load formulir sesuai umur
@@ -233,11 +235,13 @@
             <p><strong>Nama Siswa:</strong> ${siswaData.nama_siswa}</p>
             <p><strong>Nama Orang Tua:</strong> ${siswaData.nama_orangtua}</p>
             <p><strong>Tanggal Lahir:</strong> ${siswaData.tgl_lahir}</p>
-            <p><strong>Umur (bulan):</strong> ${siswaData.umur_bulan}</p>
+            <p><strong>Usia Aktual :</strong> ${siswaData.umur_aktual}</p>
+            <p><strong>Usia setelah pembulatan :</strong> ${siswaData.umur_bulan} bulan</p>
+            
+            
         </div>
     `;
 
-    // Review jawaban per pertanyaan
     for (let key in jawaban) {
       const q = formulirData.pertanyaan.find(
         (x) => "jawaban[" + x.id + "]" === key
@@ -263,8 +267,8 @@
     formStep3.nama_siswa.value = siswaData.nama_siswa;
     formStep3.nama_orangtua.value = siswaData.nama_orangtua;
     formStep3.tgl_lahir.value = siswaData.tgl_lahir;
-    formStep3.umur_hari.value = siswaData.umur_bulan;
     formStep3.formulir_id.value = formulirData.id;
+    formStep3.usia_pembulatan = siswaData.umur_bulan;
 
     Array.from(formStep3.querySelectorAll('input[name^="jawaban"]')).forEach(
       (i) => i.remove()
