@@ -29,14 +29,20 @@
         @php
         $columns = [
             ['label'=>'ID','data'=>'id'],
-            ['label'=>'Title','data'=>'title'],
-            ['label'=>'Slug','data'=>'slug'],
+            ['label'=>'Murid','data'=>'nama_siswa'],
+            ['label'=>'Orang Tua','data'=>'nama_orangtua'],
+            ['label'=>'Tanggal lahir','data'=>'tanggal_lahir'],
+            ['label'=>'Usia','data'=>'usia_aktual'],
+            ['label'=>'Usia pembulatan (bulan)','data'=>'usia_pembulatan'],
+            ['label'=>'Form Skrinning','data'=>'formulir.judul'],
+            ['label'=>'Skor didapat','data'=>'total_skor'],
+            
         ];
         @endphp
 
         <x-datatable 
             id="menu-table" 
-            :ajaxUrl="url('content/article/datatable')" 
+            :ajaxUrl="url('skrinning/siswa/datatable')" 
             :columns="$columns"
             buttonAddTitle="Skrinning Siswa"
             buttonAddUrl="skrinning/siswa/create"

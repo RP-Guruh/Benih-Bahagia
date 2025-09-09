@@ -28,21 +28,21 @@ class SkrinningController extends Controller
 
     public function datatable(Request $request)
     {
-        $query = Article::query();
-
+        $query = HasilSkrinning::query();
+        $query->with('formulir');
 
         if ($request->filled('keyword')) {
             $search = $request->keyword;
             $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('slug', 'like', "%{$search}%");
+                $q->where('nama_siswa', 'like', "%{$search}%")
+                    ->orWhere('nama_orangtua', 'like', "%{$search}%");
             });
         }
 
         return DataTables::of($query)
             ->addColumn('action', function ($row) {
                 $showUrl = route('skrinning.siswa.show', $row->id);
-                $editUrl = route('skrinning.siswa.edit', $row->id);
+                $editUrl = null;
                 return view('datatable.actions_table', compact('row', 'showUrl', 'editUrl'))->render();
             })
             ->rawColumns(['action'])
@@ -63,7 +63,7 @@ class SkrinningController extends Controller
             return response()->json($formulir);
     }
 
-        public function store(Request $request)
+    public function store(Request $request)
     {
         try {
             // ambil inputan

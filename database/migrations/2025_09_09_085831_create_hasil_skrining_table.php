@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('tanggal_lahir');
             $table->foreignId('formulir_id')->constrained('formulir')->onDelete('cascade');
             $table->foreignId('jawaban_id')->nullable()->constrained('jawaban')->onDelete('set null');
-            $table->integer('umur_bulan');
-            $table->string('umur_aktual', 50);
+            $table->integer('usia_pembulatan');
+            $table->string('usia_aktual', 50);
             $table->json('jawaban');
             $table->integer('total_skor')->default(0);
             $table->integer('total_ya')->default(0);
