@@ -16,6 +16,13 @@ Route::get('/', function () {
    return app(LandingController::class)->index();
 });
 
+Route::get('/article/{id}/{slug}', [LandingController::class, 'article'])->name('article.detail');
+Route::get('/article', [LandingController::class, 'list'])->name('article.index');
+
+Route::get('/video/{id}/{slug}', [LandingController::class, 'video'])->name('video.detail');
+Route::get('/video', [LandingController::class, 'list_video'])->name('video.index');
+
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {

@@ -26,13 +26,10 @@
                     <a class="nav-link active fw-medium" href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium" href="{{ url('/features') }}">Edukasi</a>
+                    <a class="nav-link fw-medium" href="#articles">Edukasi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium" href="{{ url('/our-team') }}">Arikel</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-medium" href="{{ url('/faqs') }}">Tentang Kami</a>
+                    <a class="nav-link fw-medium" href="#footer">Tentang Kami</a>
                 </li>
             </ul>
 

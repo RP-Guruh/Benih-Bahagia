@@ -1,4 +1,4 @@
-<div class="banner-area bg-img pb-0" id="home">
+<div class="banner-area bg-img pb-0" id="hero">
     <div class="container position-relative z-1">
         <div class="banner-content text-center pb-75">
             <h1 class="fs-60 mb-3 pb-md-3 baloo-2" style="font-weight: 800; line-height:1.2; color:#333; font-size:48px;">

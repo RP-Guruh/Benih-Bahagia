@@ -147,6 +147,57 @@
     .hover:hover {
         color: #0d6efd !important;
     }
+
+        .edu-card {
+        transition: all .3s ease;
+    }
+    .edu-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,.15) !important;
+    }
+    .text-truncate {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+.article-wrapper {
+    margin-top: 120px; /* sesuaikan tinggi header */
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+    .article-wrapper {
+        margin-top: 90px;
+    }
+
+    /* matikan sticky biar turun normal */
+    .article-wrapper .position-sticky {
+        position: static !important;
+        top: auto !important;
+        margin-bottom: 1rem; /* kasih jarak */
+    }
+}
+
+/* Mobile */
+/* Mobile */
+@media (max-width: 576px) {
+    .article-wrapper {
+        margin-top: 100px; /* tambah jarak biar gak mepet header */
+    }
+
+    .article-wrapper .position-sticky {
+        position: static !important;
+        top: auto !important;
+        margin-bottom: 1rem;
+    }
+}
+
+.ratio_klik iframe {
+    pointer-events: none;
+}
+
      </style>
 
     <!-- Title -->
@@ -159,20 +210,6 @@
       class="scrollspy-example"
       tabindex="0">
 
-    <!-- Header -->
-    @include('landing_page.partials.header')
-    <!-- Hero Section -->
-    @include('landing_page.partials.hero')
-    <!-- Asosiasi Section -->
-    @include('landing_page.partials.asosiasi')
-    <!-- Key Features Section -->
-    @include('landing_page.partials.key')
-    <!-- About App Section -->
-    @include('landing_page.partials.about_app')
-    <!-- Edukasi section -->
-    @include('landing_page.partials.article')
-    <!-- footer -->
-    @include('landing_page.partials.footer')
 
     @yield('content')
 

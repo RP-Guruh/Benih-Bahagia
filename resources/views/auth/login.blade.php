@@ -105,6 +105,13 @@
                         </button>
                     </div>
 
+                    <p class="text-center text-muted mb-0">
+            Belum punya akun? 
+            <a href="{{route('register')}}" class="fw-bold text-primary text-decoration-none">
+                Daftar
+            </a>
+        </p>
+
                     <!-- Register -->
                     {{-- 
                     <div class="form-group text-center">
