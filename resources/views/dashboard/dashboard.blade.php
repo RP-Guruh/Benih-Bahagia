@@ -93,7 +93,7 @@
 
 
     @if(Auth::user()->level_id == 2)
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="card bg-white border-0 rounded-3 mb-4">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3 mb-lg-4">
