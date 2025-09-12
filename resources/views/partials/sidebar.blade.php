@@ -59,7 +59,7 @@
                     'Skrinning' => [
                         'icon'=>'diversity_1',
                         'children'=>[
-                            ['code'=>'skrinning/siswa','title'=>'Skrinning Siswa','url'=>'skrinning/siswa'],
+                            ['code'=>'skrinning/siswa','title'=>'Skrinning Anak','url'=>'skrinning/siswa'],
                         ]
                     ],
                 ] as $menuTitle => $menuData)

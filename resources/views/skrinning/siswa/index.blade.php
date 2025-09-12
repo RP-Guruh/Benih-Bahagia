@@ -2,7 +2,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">Content - Article</h3>
+            <h3 class="mb-0">Skrinning</h3>
 
             <nav style="--bs-breadcrumb-divider: '&gt;';" aria-label="breadcrumb">
                 <ol class="breadcrumb align-items-center mb-0 lh-1">
@@ -13,10 +13,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Edukasi</span>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Article</span>
+                        <span class="fw-medium">Skrinning</span>
                     </li>
                 </ol>
             </nav>
@@ -29,9 +26,9 @@
         @php
         $columns = [
             ['label'=>'ID','data'=>'id'],
-            ['label'=>'Murid','data'=>'nama_siswa'],
+            ['label'=>'Anak','data'=>'nama_siswa'],
             ['label'=>'Orang Tua','data'=>'nama_orangtua'],
-            ['label'=>'Tanggal lahir','data'=>'tanggal_lahir'],
+        ['label'=>'Tanggal lahir','data'=>'tanggal_lahir'],
             ['label'=>'Form Skrinning','data'=>'formulir.judul'],
             ['label'=>'Skor didapat','data'=>'total_skor'],
             

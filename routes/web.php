@@ -8,6 +8,7 @@ use App\Http\Controllers\MasterData\{FormulirController, PertanyaanController, J
 use App\Http\Controllers\Content\{ArticleController, CategoryController, VideoController};
 use App\Http\Controllers\Skrinning\{SkrinningController};
 use App\Http\Controllers\LandingPage\LandingController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,8 +27,12 @@ Route::get('/video', [LandingController::class, 'list_video'])->name('video.inde
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
-        return view('dashboard.dashboard');
+        return app(DashboardController::class)->index();
     })->name('dashboard');
+
+    Route::get('/dashboard/anak-by-age', [DashboardController::class, 'anakByAge'])->name('dashboard.by.age');
+
+
     Route::get('/test', [TestController::class, 'index'])->middleware('can-access:test,view');
     Route::get('/global-search', [GlobalSearchController::class, 'search']);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Skrinning;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
@@ -30,6 +31,9 @@ class SkrinningController extends Controller
     {
         $query = HasilSkrinning::query();
         $query->with('formulir');
+        
+        $query->where('user_id', Auth::user()->id); // data dilihat berdasarkan id nya saja
+        
 
         if ($request->filled('keyword')) {
             $search = $request->keyword;
