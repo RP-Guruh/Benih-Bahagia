@@ -38,7 +38,7 @@
                         <i class="ri-user-smile-line fs-4 text-primary"></i>
                     </div>
                     <div class="d-flex align-items-center">
-                        <h3 class="fs-24 fw-bold mb-0 text-dark">{{ $totalSiswaDiSkrinning }}</h3>
+                        <h3 class="fs-24 fw-bold mb-0 text-dark">{{ $totalSiswaDiSkrinning ?? 0 }}</h3>
                         <span
                             class="d-inline-block px-2 text-danger border border-danger rounded-pill bg-opacity-25 fs-12 fw-medium ms-2">
                             <i class="ri-arrow-up-fill"></i>
@@ -56,7 +56,7 @@
                         <i class="ri-stethoscope-line fs-4 text-danger"></i>
                     </div>
                     <div class="d-flex align-items-center">
-                        <h3 class="fs-24 fw-bold mb-0 text-dark">{{ $totalSiswaDiSkrinning7hari }}</h3>
+                        <h3 class="fs-24 fw-bold mb-0 text-dark">{{ $totalSiswaDiSkrinning7hari ?? 0 }}</h3>
                         <span
                             class="d-inline-block px-2 text-danger border border-danger rounded-pill bg-opacity-25 fs-12 fw-medium ms-2">
                             <i class="ri-arrow-up-fill"></i>
