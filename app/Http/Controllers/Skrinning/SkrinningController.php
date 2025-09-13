@@ -69,6 +69,7 @@ class SkrinningController extends Controller
 
     public function store(Request $request)
     {
+     
         try {
             // ambil inputan
             $nama_siswa     = $request->nama_siswa;
@@ -76,23 +77,11 @@ class SkrinningController extends Controller
             $tanggal_lahir  = $request->tgl_lahir; // dari form Step 1
             $formulir_id    = $request->formulir_id;
             $user_id        = auth()->id();
-
-            $birth  = Carbon::parse($tanggal_lahir);
-            $today  = Carbon::today();
-
-            // Hitung selisih langsung
-            $diff = $birth->diff($today);
-
-            $usia_bulan = $diff->y * 12 + $diff->m; // total bulan
-            $sisa_hari  = $diff->d;                  // sisa hari
-
-            // format usia aktual
-            $usia_aktual = $usia_bulan . ' bulan ' . $sisa_hari . ' hari';
-
-            // pembulatan bulan jika sisa hari > 17
-            $usia_pembulatan = ($sisa_hari > 17) ? $usia_bulan + 1 : $usia_bulan;
-
-          
+            $usia_aktual = $request->umur_aktual;
+            $prematur_info = $request->prematur_info == 'YA' ? 'Y' : 'N';
+            $usia_lahir_prematur = $request->usia_lahir_prematur ?? null;
+            $usia_setelah_koreksi_prematur = $request->usia_setelah_koreksi ?? null;
+            $usia_pembulatan = $request->usia_pembulatan;
             $jawaban = $request->except([
                 '_token', 
                 'nama_siswa', 
@@ -129,6 +118,9 @@ class SkrinningController extends Controller
                 'formulir_id'     => $formulir_id,
                 'usia_aktual'     => $usia_aktual,
                 'usia_pembulatan' => $usia_pembulatan,
+                'prematur'        => $prematur_info,
+                'prematur_minggu' => $usia_lahir_prematur,
+                'usia_setelah_koreksi_prematur' => $usia_setelah_koreksi_prematur,
                 'jawaban'         => json_encode($jawaban),
                 'total_ya'        => $total_ya,
                 'total_tidak'     => $total_tidak,
@@ -144,7 +136,6 @@ class SkrinningController extends Controller
             ]);
 
         } catch (Exception $e) {
-            dd('pesan : '. $e->getMessage());
             return redirect()->back()->with('alert', [
                 'type'    => 'error',
                 'title'   => 'Terjadi Kesalahan!',

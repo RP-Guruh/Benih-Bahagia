@@ -23,7 +23,10 @@ class HasilSkrinning extends Model
         'total_tidak',
         'total_skor',
         'jawaban_id',    
-        'user_id'   
+        'user_id',
+        'prematur',
+        'prematur_minggu',
+        'usia_setelah_koreksi_prematur'   
     ];
 
     protected $casts = [

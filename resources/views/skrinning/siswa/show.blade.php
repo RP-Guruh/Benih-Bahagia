@@ -27,6 +27,14 @@
         <div class="p-3 rounded bg-white border shadow-md card">
             <h4 class="fw-semibold mb-3">Usia & Skrining</h4>
             <p class="mb-2"><strong>Usia Aktual:</strong> <span class="text-secondary">{{ $hasil->usia_aktual }}</span></p>
+            
+            <p class="mb-2"><strong>Prematur:</strong> <span class="text-secondary">{{ $hasil->prematur == 'N' ? 'Tidak' : 'Ya' }}</span></p>
+            @if($hasil->prematur == 'Y')
+                 <p class="mb-2"><strong>Prematur:</strong> <span class="text-secondary">{{ $hasil->prematur_minggu }} Minggu</span></p>
+            @endif
+            @if($hasil->prematur == 'Y')
+                 <p class="mb-2"><strong>Usia setelah dikoreksi prematur:</strong> <span class="text-secondary">{{ $hasil->usia_setelah_koreksi_prematur }}</span></p>
+            @endif
             <p class="mb-2"><strong>Usia Pembulatan:</strong> <span class="text-secondary">{{ $hasil->usia_pembulatan }} bulan</span></p>
           <p class="mb-2">
                 <strong>Dibuat / Tanggal Skrining:</strong> 
@@ -74,7 +82,15 @@
                                     <span class="badge bg-secondary">-</span>
                                 @endif
                             </td>
-                            <td class="text-center">{{ $pertanyaan->bobot_nilai }}</td>
+                              <td class="text-center">
+                                @if(($jawaban[$pertanyaan->id] ?? '') === 'ya')
+                                    {{ $pertanyaan->bobot_nilai }}
+                                @elseif(($jawaban[$pertanyaan->id] ?? '') === 'tidak')
+                                    0
+                                @else
+                                    <span class="badge bg-secondary">-</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                     <tr>

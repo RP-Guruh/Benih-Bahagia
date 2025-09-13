@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('hasil_skrining', function (Blueprint $table) {
             $table->integer('prematur_minggu')->nullable();
+            $table->string('usia_setelah_koreksi_prematur')->nullable();
         });
     }
 
