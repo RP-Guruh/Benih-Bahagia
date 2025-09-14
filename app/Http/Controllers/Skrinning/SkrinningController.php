@@ -46,7 +46,7 @@ class SkrinningController extends Controller
         return DataTables::of($query)
             ->addColumn('action', function ($row) {
                 $showUrl = route('skrinning.siswa.show', $row->id);
-                $editUrl = null;
+                $editUrl = route('skrinning.siswa.edit', $row->id);
                 return view('datatable.actions_table', compact('row', 'showUrl', 'editUrl'))->render();
             })
             ->rawColumns(['action'])
@@ -152,11 +152,40 @@ class SkrinningController extends Controller
 
     public function print($id)
     {
-         $hasil = HasilSkrinning::with(['formulir', 'evaluasi.intervensiRows', 'guru'])->findOrFail($id);
+        $hasil = HasilSkrinning::with(['formulir', 'evaluasi.intervensiRows', 'guru'])->findOrFail($id);
         $pdf = Pdf::loadView('skrinning.siswa.pdf', compact('hasil'))
             ->setPaper('a4', 'portrait');
 
         return $pdf->stream('hasil_skrinning_'.$hasil->id.'.pdf');
     }
+
+    public function edit($id)
+    {
+        $hasil = HasilSkrinning::where('id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
+
+        if(!$hasil) {
+            return redirect()->back()->with('alert', [
+                'type'    => 'error',
+                'title'   => 'Terjadi Kesalahan!',
+                'message' => 'Data tidak ditemukan atau Anda tidak memiliki izin untuk mengedit data ini.'
+            ]);
+        }
+
+        if ($hasil->created_at->diffInDays(now()) > 7) {
+            return redirect()->route('hasil.show', $hasil->id)
+                ->with('error', 'Data hanya bisa diubah dalam 1 minggu setelah dibuat.');
+        }
+
+        $formulir = null;
+
+        if (!empty($hasil->formulir_id)) {
+            $formulir = Formulir::with('pertanyaan')->find($hasil->formulir_id);
+        }
+
+        $jawaban = json_decode($hasil->jawaban ?? '[]', true) ?: [];
+
+        return view('skrinning.siswa.edit', compact('hasil', 'formulir', 'jawaban'));
+    }
+
 
 }

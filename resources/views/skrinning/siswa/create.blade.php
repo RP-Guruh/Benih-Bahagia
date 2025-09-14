@@ -159,7 +159,10 @@
     </div>
   </div>
 </div>
-@endsection @push('scripts')
+@endsection 
+
+
+@push('scripts')
 
 <script>
   // Toggle usia prematur field
