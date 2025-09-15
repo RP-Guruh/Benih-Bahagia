@@ -1,7 +1,6 @@
 <div class="sidebar-area" id="sidebar-area">
 <div class="logo position-relative">
                 <a href="{{ url('/') }}" class="d-block text-decoration-none position-relative">
-                    <img src="{{ asset('assets/images/logo-icon.png') }}" alt="logo-icon">
                     <span class="logo-text fw-bold text-dark">Benih Bahagia</span>
                 </a>
                 <button class="sidebar-burger-menu bg-transparent p-0 border-0 opacity-0 z-n1 position-absolute top-50 end-0 translate-middle-y" id="sidebar-burger-menu">
@@ -60,6 +59,12 @@
                         'icon'=>'diversity_1',
                         'children'=>[
                             ['code'=>'skrinning/siswa','title'=>'Skrinning Anak','url'=>'skrinning/siswa'],
+                        ]
+                    ],
+                    'User' => [
+                        'icon'=>'people',
+                        'children'=>[
+                            ['code'=>'user/terdaftar','title'=>'User terdaftar','url'=>'user/terdaftar'],
                         ]
                     ],
                 ] as $menuTitle => $menuData)

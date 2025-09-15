@@ -42,28 +42,32 @@
     <!-- Dropdown User Profile -->
     <div class="dropdown admin-profile">
         <div class="d-flex align-items-center cursor dropdown-toggle" data-bs-toggle="dropdown">
-            <img class="rounded-circle wh-40 administrator" src="/assets/images/administrator.jpg" alt="admin" />
+            <img class="rounded-circle wh-40 administrator" src="/assets/images/welcome.png" alt="admin" />
             <!-- Nama hanya muncul di layar besar -->
-            <div class="d-none d-sm-block ms-2">
+            <div class="d-none d-sm-block ms-2 ">
                 <h3 class="mb-0 fs-14 fw-semibold">{{ auth()->user()->name }}</h3>
             </div>
         </div>
 
         <div class="dropdown-menu dropdown-menu-end mt-2 shadow border-0">
             <div class="d-flex align-items-center info p-2">
-                <img class="rounded-circle wh-30 administrator" src="/assets/images/administrator.jpg" alt="admin" />
+                <img class="rounded-circle wh-30 administrator" src="/assets/images/welcome.png" alt="admin" />
                 <div class="ms-2">
-                    <h3 class="fw-medium mb-0">{{ auth()->user()->name }}</h3>
+                    <h3 class="fw-medium mb-0 text-muted">{{ auth()->user()->name }}</h3>
                     <span class="fs-12 text-muted">{{ auth()->user()->email }}</span>
                 </div>
             </div>
             <hr class="my-1">
             <a class="dropdown-item d-flex align-items-center" href="my-profile.html">
-                <i class="material-symbols-outlined">account_circle</i><span class="ms-2">My Profile</span>
+                <i class="material-symbols-outlined">account_circle</i><span class="ms-2">Change Password</span>
             </a>
-            <a class="dropdown-item d-flex align-items-center" href="login.html">
-                <i class="material-symbols-outlined">logout</i><span class="ms-2">Logout</span>
-            </a>
+            <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                @csrf
+                <button type="submit" class="dropdown-item d-flex align-items-center bg-transparent border-0 w-100 text-start">
+                    <i class="material-symbols-outlined">logout</i>
+                    <span class="ms-2">Logout</span>
+                </button>
+            </form>
         </div>
     </div>
 </div>

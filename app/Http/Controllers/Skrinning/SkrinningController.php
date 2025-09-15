@@ -74,7 +74,7 @@ class SkrinningController extends Controller
             // ambil inputan
             $nama_siswa     = $request->nama_siswa;
             $nama_orangtua  = $request->nama_orangtua;
-            $tanggal_lahir  = $request->tgl_lahir; // dari form Step 1
+            $tanggal_lahir  = $request->tgl_lahir; 
             $formulir_id    = $request->formulir_id;
             $user_id        = auth()->id();
             $usia_aktual = $request->umur_aktual;
@@ -153,6 +153,7 @@ class SkrinningController extends Controller
     public function print($id)
     {
         $hasil = HasilSkrinning::with(['formulir', 'evaluasi.intervensiRows', 'guru'])->findOrFail($id);
+    
         $pdf = Pdf::loadView('skrinning.siswa.pdf', compact('hasil'))
             ->setPaper('a4', 'portrait');
 
@@ -186,6 +187,95 @@ class SkrinningController extends Controller
 
         return view('skrinning.siswa.edit', compact('hasil', 'formulir', 'jawaban'));
     }
+
+    public function update(Request $request, $id)
+    {
+        
+        $hasil = HasilSkrinning::where('id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
+     
+        if(!$hasil) {
+            return redirect()->back()->with('alert', [
+                'type'    => 'error',
+                'title'   => 'Terjadi Kesalahan!',
+                'message' => 'Data tidak ditemukan atau Anda tidak memiliki izin untuk mengedit data ini.'
+            ]);
+        }
+
+        if ($hasil->created_at->diffInDays(now()) > 7) {
+            return redirect()->route('hasil.show', $hasil->id)
+                ->with('error', 'Data hanya bisa diubah dalam 1 minggu setelah dibuat.');
+        }
+       
+        try {
+            $nama_siswa     = $request->nama_siswa;
+            $nama_orangtua  = $request->nama_orangtua;
+            $tanggal_lahir  = $request->tanggal_lahir; 
+            $formulir_id    = $request->formulir_id;
+            $user_id        = auth()->id();
+            $usia_aktual = $request->umur_aktual;
+            $prematur_info = $request->prematur_info == 'YA' ? 'Y' : 'N';
+            $usia_lahir_prematur = $request->usia_lahir_prematur ?? null;
+            $usia_setelah_koreksi_prematur = $request->usia_setelah_koreksi ?? null;
+            $usia_pembulatan = $request->usia_pembulatan;
+            $jawaban = $request->except([
+                '_token', 
+                '_method',
+                'nama_siswa', 
+                'nama_orangtua', 
+                'tgl_lahir', 
+                'umur_hari', 
+                'formulir_id'
+            ]);
+           
+            $bobot_pertanyaan = Pertanyaan::where('formulir_id', $formulir_id)
+                ->pluck('bobot_nilai', 'id')
+                ->toArray();
+
+            $jawaban = $request->jawaban ?? []; 
+            $total_ya = 0;
+            $total_tidak = 0;
+
+            foreach ($jawaban as $pertanyaan_id => $jawaban_val) {
+                $bobot = $bobot_pertanyaan[$pertanyaan_id] ?? 0;
+                if ($jawaban_val === 'ya') {
+                    $total_ya += $bobot;
+                } elseif ($jawaban_val === 'tidak') {
+                    $total_tidak += $bobot;
+                }
+            }
+            $jawaban_id = Jawaban::where('nilai_min', '<=', $total_ya)->where('nilai_max', '>=', $total_ya)->first();
+            $hasil->update([
+                'nama_siswa'      => $nama_siswa,
+                'nama_orangtua'   => $nama_orangtua,
+                'tanggal_lahir'   => $tanggal_lahir,
+                'formulir_id'     => $formulir_id,
+                'usia_aktual'     => $usia_aktual,
+                'usia_pembulatan' => $usia_pembulatan,
+                'prematur'        => $prematur_info,
+                'prematur_minggu' => $usia_lahir_prematur,
+                'usia_setelah_koreksi_prematur' => $usia_setelah_koreksi_prematur,
+                'jawaban'         => json_encode($jawaban),
+                'total_ya'        => $total_ya,
+                'total_tidak'     => $total_tidak,
+                'total_skor'      => $total_ya,
+                'jawaban_id'      => $jawaban_id->id ?? null,
+                'user_id'         => $user_id,
+            ]);
+            return redirect()->route('skrinning.siswa.index')->with('alert', [
+                'type'    => 'success',
+                'title'   => 'Berhasil!',
+                'message' => 'Hasil skrining siswa berhasil diubah.'
+            ]);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return redirect()->back()->with('alert', [
+                'type'    => 'error',
+                'title'   => 'Terjadi Kesalahan!',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
 
 
 }

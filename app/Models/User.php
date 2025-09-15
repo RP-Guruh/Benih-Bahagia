@@ -79,4 +79,14 @@ class User extends Authenticatable
             'id'                    // localKey di Level
         );
     }
+
+    public function skrinning() 
+    {
+        return $this->hasMany(HasilSkrinning::class, 'user_id', 'id');
+    }
+
+    public function skrinningCount()
+    {
+        return $this->skrinning()->count();
+    }
 }

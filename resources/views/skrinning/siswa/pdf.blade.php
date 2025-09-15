@@ -93,16 +93,29 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
-        margin-top: -20px;
+        margin-top: -10px;
       "
     >
       <!-- Logo kiri -->
       <div>
-        <img
-          src="{{ public_path('assets/landing_page/images/LogoBenih.png') }}"
-          alt="Logo"
-          style="height: 100px"
-        />
+        
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <img
+            src="{{ public_path('assets/landing_page/images/logo_kemdikbud.png') }}"
+            alt="Logo"
+            style="height: 100px"
+          />
+          <img
+            src="{{ public_path('assets/landing_page/images/logo_berdampak.png') }}"
+            alt="Logo"
+            style="height: 100px"
+          />
+          <img
+            src="{{ public_path('assets/landing_page/images/LogoBenih.png') }}"
+            alt="Logo"
+            style="height: 100px"
+          />
+        </div>
       </div>
 
       <!-- Judul kanan -->
@@ -118,53 +131,54 @@
     <!-- Info Siswa -->
     <table style="width: 100%; margin-bottom: 10px">
       <tr>
-        <td style="width: 30%"><strong>Nama Siswa</strong></td>
-        <td>: {{ $hasil->nama_siswa }}</td>
+        <td style="width: 30%; text-align: left;"><strong>Nama Siswa</strong></td>
+        <td style="text-align: left;">: {{ $hasil->nama_siswa }}</td>
       </tr>
       <tr>
-        <td><strong>Nama Orang Tua</strong></td>
-        <td>: {{ $hasil->nama_orangtua }}</td>
+        <td style="text-align: left;"><strong>Nama Orang Tua</strong></td>
+        <td style="text-align: left;">: {{ $hasil->nama_orangtua }}</td>
       </tr>
       <tr>
-        <td><strong>Tanggal Lahir</strong></td>
-        <td>
-          :
-          {{ \Carbon\Carbon::parse($hasil->tgl_lahir)->translatedFormat('d F Y') }}
+        <td style="text-align: left;"><strong>Tanggal Lahir</strong></td>
+        <td style="text-align: left;">
+          : {{ \Carbon\Carbon::parse($hasil->tanggal_lahir)->translatedFormat('d F Y') }}
         </td>
       </tr>
+
       <tr>
-        <td><strong>Prematur</strong></td>
-        <td>: {{ $hasil->prematur == 'Y' ? 'Ya' : 'Tidak' }}</td>
+        <td style="text-align: left;"><strong>Prematur</strong></td>
+        <td style="text-align: left;">: {{ $hasil->prematur == 'Y' ? 'Ya' : 'Tidak' }}</td>
       </tr>
       @if($hasil->prematur == "Y")
       <tr>
-        <td><strong>Usia Lahir Prematur</strong></td>
-        <td>
+        <td style="text-align: left;"><strong>Usia Lahir Prematur</strong></td>
+        <td style="text-align: left;">
           : {{ str_replace('minggu', '', $hasil->prematur_minggu) }} minggu
         </td>
       </tr>
       @endif
       <tr>
-        <td><strong>Usia Aktual</strong></td>
-        <td>: {{ $hasil->usia_aktual }}</td>
+        <td style="text-align: left;"><strong>Usia Aktual</strong></td>
+        <td style="text-align: left;">: {{ $hasil->usia_aktual }}</td>
       </tr>
       @if($hasil->prematur == "Y")
       <tr>
-        <td><strong>Usia Setelah Koreksi</strong></td>
-        <td>: {{ $hasil->usia_setelah_koreksi_prematur }}</td>
+        <td style="text-align: left;"><strong>Usia Setelah Koreksi</strong></td>
+        <td style="text-align: left;">: {{ $hasil->usia_setelah_koreksi_prematur }}</td>
       </tr>
       @endif
       <tr>
-        <td><strong>Usia Pembulatan</strong></td>
-        <td>: {{ $hasil->usia_pembulatan }} bulan</td>
+        <td style="text-align: left;"><strong>Usia Pembulatan</strong></td>
+        <td style="text-align: left;">: {{ $hasil->usia_pembulatan }} bulan</td>
       </tr>
       <tr>
-        <td><strong>Skrining oleh</strong></td>
-        <td>
+        <td style="text-align: left;"><strong>Skrining oleh</strong></td>
+        <td style="text-align: left;">
           : {{ $hasil->guru?->name ?? '-' }} -
-          {{ $hasil->created_at->translatedFormat('j F Y') }}
+          {{ $hasil->created_at->translatedFormat('d F Y') }}
         </td>
       </tr>
+
     </table>
 
     <!-- Jawaban -->
@@ -218,27 +232,27 @@
       </tbody>
     </table>
 
-<!-- Evaluasi + Intervensi -->
-<div style="page-break-inside: avoid; margin-top: 20px;">
+    <!-- Evaluasi + Intervensi -->
+    <div style="page-break-inside: avoid; margin-top: 20px">
+      <h3 class="text-primary mt-2">Evaluasi Hasil</h3>
+      <p><strong>Total Skor:</strong> {{ $hasil->total_skor }}</p>
+      <p>
+        <strong>Interpretasi:</strong>
+        {{ $hasil->evaluasi->interpretasi ?? '-' }}
+      </p>
 
-    <h3 class="text-primary mt-2">Evaluasi Hasil</h3>
-    <p><strong>Total Skor:</strong> {{ $hasil->total_skor }}</p>
-    <p>
-      <strong>Interpretasi:</strong> {{ $hasil->evaluasi->interpretasi ?? '-' }}
-    </p>
-
-    <!-- Intervensi -->
-    <h4>Intervensi</h4>
-    @if($hasil->evaluasi && $hasil->evaluasi->intervensiRows->isNotEmpty())
-        <ul>
-            @foreach($hasil->evaluasi->intervensiRows as $intervensi)
-                <li>{{ $intervensi->intervensi }}</li>
-            @endforeach
-        </ul>
-    @else
-        <p>-</p>
-    @endif
-</div>
+      <!-- Intervensi -->
+      <h4>Intervensi</h4>
+      @if($hasil->evaluasi && $hasil->evaluasi->intervensiRows->isNotEmpty())
+      <ul>
+        @foreach($hasil->evaluasi->intervensiRows as $intervensi)
+        <li>{{ $intervensi->intervensi }}</li>
+        @endforeach
+      </ul>
+      @else
+      <p>-</p>
+      @endif
+    </div>
 
     <!-- Footer -->
     <footer>

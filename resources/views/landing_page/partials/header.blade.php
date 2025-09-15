@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top" id="navbar">
     <div class="container">
-        <!-- Logo + Nama Brand -->
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
             <img src="{{ asset('assets/landing_page/images/logo-cropeed.png') }}"
                  alt="Logo Benih"

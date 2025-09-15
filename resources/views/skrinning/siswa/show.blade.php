@@ -69,9 +69,11 @@
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td class="text-secondary fw-medium" style="max-width: 400px; word-wrap: break-word;">
                                 {{ $pertanyaan->teks }}
-                                 <img src="/{{ $pertanyaan->petunjuk_gambar }}" 
-                                 class="img-fluid rounded" 
-                                 style="max-height:200px; object-fit:contain;">
+                                @if(!empty($pertanyaan->petunjuk_gambar))
+                                    <img src="/{{ $pertanyaan->petunjuk_gambar }}" 
+                                         class="img-fluid rounded" 
+                                         style="max-height:200px; object-fit:contain;">
+                                @endif
                             </td>
                             <td class="text-center">
                                 @if(($jawaban[$pertanyaan->id] ?? '') === 'ya')

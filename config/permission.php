@@ -83,6 +83,9 @@ return [
         'delete'  => ['destroy'],
         'print'  => ['print'],
     ],
+    'user/terdaftar' => [
+        'view'    => ['index'],
+    ],
 
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\MasterData\{FormulirController, PertanyaanController, J
 use App\Http\Controllers\Content\{ArticleController, CategoryController, VideoController};
 use App\Http\Controllers\Skrinning\{SkrinningController};
 use App\Http\Controllers\LandingPage\LandingController;
+use App\Http\Controllers\User\UserTerdaftarController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,13 @@ Route::middleware('auth')->group(function () {
         Route::get('siswa/formulir/{usia}', [SkrinningController::class, 'formulir'])->name('skrinning.siswa.formulir');
         
         Route::resource('siswa', SkrinningController::class)->names('skrinning.siswa');
+
+    });
+
+    Route::prefix('user')->group(function () {
+       
+        Route::get('terdaftar/datatable', [UserTerdaftarController::class, 'datatable'])->name('user.terdaftar.datatable');
+        Route::resource('terdaftar', UserTerdaftarController::class)->names('user.terdaftar');
 
     });
 
