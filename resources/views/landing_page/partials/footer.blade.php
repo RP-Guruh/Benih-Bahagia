@@ -1,4 +1,4 @@
-<div class="unlock-area ptb-150 position-relative" id="admin" style="margin-top:-400px;"> 
+<div class="unlock-area ptb-150 position-relative" id="admin" style="margin-top:-400px;" id="tentang"> 
     <div class="container">
         <div class="border-bottom pb-150">
             <div class="row">
@@ -28,9 +28,7 @@
             <!-- Logo & Alamat -->
             <div class="col-lg-4 col-sm-6">
                 <div class="footer-single-item mb-4">
-                    <a href="#" class="footer-logo d-inline-block mb-4">
-                        <img src="assets/images/landing/logo.svg" alt="Benih Bahagia">
-                    </a>
+                   
                     <p class="mb-4 pb-lg-2">
                         Aplikasi <strong>Benih Bahagia</strong> hadir untuk mendukung guru dan orang tua 
                         dalam memahami perkembangan anak, sehingga setiap potensi bisa tumbuh dengan maksimal.

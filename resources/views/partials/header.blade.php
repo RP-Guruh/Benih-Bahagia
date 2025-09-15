@@ -58,7 +58,7 @@
                 </div>
             </div>
             <hr class="my-1">
-            <a class="dropdown-item d-flex align-items-center" href="my-profile.html">
+            <a class="dropdown-item d-flex align-items-center" href="{{ route('change-password.index') }}">
                 <i class="material-symbols-outlined">account_circle</i><span class="ms-2">Change Password</span>
             </a>
             <form action="{{ route('logout') }}" method="POST" id="logout-form">

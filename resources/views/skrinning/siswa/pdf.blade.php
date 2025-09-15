@@ -106,7 +106,7 @@
             style="height: 100px"
           />
           <img
-            src="{{ public_path('assets/landing_page/images/logo_berdampak.png') }}"
+            src="{{ public_path('assets/landing_page/images/logo_kemenkes.png') }}"
             alt="Logo"
             style="height: 100px"
           />

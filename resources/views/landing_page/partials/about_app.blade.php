@@ -4,7 +4,7 @@
             <!-- Gambar ilustrasi -->
             <div class="col-lg-6">
                 <div class="tailor-img">
-                    <img src="{{ asset('assets/images/landing/tailor-img.png') }}" alt="Ilustrasi aplikasi">
+                    <img src="{{ asset('assets/landing_page/images/produk-1.png') }}" alt="Ilustrasi aplikasi">
                 </div>
             </div>
 

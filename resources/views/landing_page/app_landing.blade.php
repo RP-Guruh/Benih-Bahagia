@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <title>Benih Bahagia</title>
     <!-- Links Of CSS File -->
     <link rel="stylesheet" href="{{ asset('assets/css/sidebar-menu.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/simplebar.css') }}">
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/landing_page/images/favicon.png') }}">
+   <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/iconBenih.ico') }}?v=2">
 
     <!-- Google fonts -->
      <link rel="preconnect" href="https://fonts.googleapis.com">

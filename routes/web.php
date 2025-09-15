@@ -10,6 +10,7 @@ use App\Http\Controllers\Skrinning\{SkrinningController};
 use App\Http\Controllers\LandingPage\LandingController;
 use App\Http\Controllers\User\UserTerdaftarController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ChangePasswordController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -83,11 +84,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('user')->group(function () {
-       
         Route::get('terdaftar/datatable', [UserTerdaftarController::class, 'datatable'])->name('user.terdaftar.datatable');
         Route::resource('terdaftar', UserTerdaftarController::class)->names('user.terdaftar');
-
     });
+
+    Route::resource('change-password', ChangePasswordController::class)->names('change-password');
 
 });
 

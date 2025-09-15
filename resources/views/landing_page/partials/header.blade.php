@@ -28,7 +28,7 @@
                     <a class="nav-link fw-medium" href="#articles">Edukasi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium" href="#footer">Tentang Kami</a>
+                    <a class="nav-link fw-medium" href="#about-app">Tentang Kami</a>
                 </li>
             </ul>
 
