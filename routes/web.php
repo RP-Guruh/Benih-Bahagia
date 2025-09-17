@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/update-header', [SettingLandingController::class, 'updateHeader'])->name('admin.updateHeader');
     Route::post('/admin/update-hero', [SettingLandingController::class, 'updateHero'])->name('admin.updateHero');
     Route::post('/admin/update-partners-section', [SettingLandingController::class, 'updatePartner'])->name('admin.updatePartner');
+    Route::post('/admin/update-features', [SettingLandingController::class, 'updateFeatures'])->name('admin.updateFeatures');
 
 
 

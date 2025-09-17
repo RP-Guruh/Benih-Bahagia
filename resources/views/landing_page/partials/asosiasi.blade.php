@@ -27,7 +27,12 @@
         @auth
             @if(in_array(auth()->user()->level_id, [1,3]))
                 <div class="text-center mt-4">
-                    <button id="edit-partners-section" class="btn btn-primary">Edit Asosiasi</button>
+                  <button id="edit-partners-section" 
+                            class="btn btn-primary d-inline-flex align-items-center gap-2">
+                        <i class="ri-edit-2-fill"></i>
+                        Edit Asosiasi
+                    </button>
+
                 </div>
             @endif
         @endauth

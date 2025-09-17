@@ -50,10 +50,41 @@ class LandingController extends Controller
             'description' => $titleData['description'] ?? 'Kolaborasi ini memastikan aplikasi memiliki dasar ilmiah yang kuat.',
             'logos' => $logosData,
         ];
+
+        $settingsFeatures = Setting::where('key', 'features')->first();
+        
+        $featuresData = json_decode($settingsFeatures->title ?? '{}', true);
+        $imageFeatures = json_decode($settingsFeatures->logo ?? '', true);
+        
+        $defaultFeatures = [
+            [
+                'icon' => 'fact_check',
+                'icon_class' => 'text-primary bg-primary bg-opacity-25',
+                'heading' => 'Skrinning',
+                'desc' => 'Guru dapat melakukan skrining perkembangan anak dengan mudah menggunakan instrumen digital yang terstruktur dan praktis.'
+            ],
+            [
+                'icon' => 'school',
+                'icon_class' => 'text-success bg-success bg-opacity-25',
+                'heading' => 'Edukasi',
+                'desc' => 'Menyediakan materi edukatif bagi guru dan orang tua untuk mendukung proses tumbuh kembang anak secara optimal.'
+            ],
+            [
+                'icon' => 'support_agent',
+                'icon_class' => 'text-warning bg-warning bg-opacity-25',
+                'heading' => 'Konsultasi',
+                'desc' => 'Fitur konsultasi akan memudahkan guru berkomunikasi dengan ahli atau orang tua, sehingga intervensi dapat dilakukan lebih cepat dan tepat.'
+            ],
+        ];
+        
+        
+        $contents['features'] = [
+            'subtitle' => $featuresData['subtitle'] ?? 'Keunggulan Kami',
+            'title' => $featuresData['title'] ?? 'Membantu Guru dalam Memantau Perkembangan Anak',
+            'items' => $imageFeatures['features'] ?? $defaultFeatures,
+        ];
+
    
-
-
-      
         $articles = Article::orderBy("created_at","desc")->limit(8)->get();
         $video = Video::orderBy("created_at","desc")->limit(8)->get();
         return view('landing_page.landing', compact('articles','video', 'contents'));
