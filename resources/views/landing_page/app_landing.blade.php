@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Benih Bahagia</title>
     <!-- Links Of CSS File -->
@@ -22,15 +25,16 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <!-- Favicon -->
-   <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/iconBenih.ico') }}?v=2">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/iconBenih.ico') }}?v=2">
 
     <!-- Google fonts -->
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
-     <style>
-
+    <style>
         .baloo-2-logo {
             font-family: "Baloo 2", sans-serif;
             font-optical-sizing: auto;
@@ -43,175 +47,200 @@
             font-optical-sizing: auto;
         }
 
-            .partner-img {
-        max-height: 100px; /* ukuran logo */
-        width: auto;
-        filter: grayscale(100%);
-        transition: filter 0.3s ease, transform 0.3s ease;
-    }
-    .partner-logo {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        padding: 30px 20px; /* tambah ruang atas-bawah */
-    }
-    .partner-logo:hover {
-        transform: translateY(-6px) scale(1.08);
-        box-shadow: 0 12px 24px rgba(0,0,0,0.12);
-    }
-    .partner-logo:hover .partner-img {
-        filter: grayscale(0%);
-        transform: scale(1.05);
-    }
-
-       .edu-card {
-        background: #fff;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        transition: all 0.3s ease;
-        display: flex;
-        flex-direction: column;
-    }
-    .edu-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    }
-    .edu-thumb {
-        position: relative;
-        overflow: hidden;
-    }
-    .edu-thumb img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-    .edu-card:hover .edu-thumb img {
-        transform: scale(1.08);
-    }
-    .edu-badge {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background: rgba(0,0,0,0.7);
-        color: #fff;
-        font-size: 12px;
-        padding: 4px 10px;
-        border-radius: 12px;
-    }
-    .edu-content {
-        padding: 20px;
-        flex: 1;
-    }
-    .edu-content h5 {
-        font-size: 18px;
-        margin-bottom: 10px;
-        line-height: 1.4;
-    }
-    .edu-content p {
-        font-size: 14px;
-        color: #666;
-        margin-bottom: 0;
-    }
-    /* spacing antar section biar lega */
-    .py-120 {
-        padding-top: 120px;
-        padding-bottom: 120px;
-    }
-    .edu-video-area iframe {
-        border: 0;
-    }
-
-    /* Responsif biar logo nggak kegedean di layar kecil */
-    @media (max-width: 576px) {
         .partner-img {
-            max-height: 70px;
+            max-height: 100px;
+            /* ukuran logo */
+            width: auto;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease, transform 0.3s ease;
         }
-        .partner-logo {
-            padding: 20px 15px; /* lebih kecil di HP */
-        }
-    }
 
-    .footer-area {
-        background: #1d1f27;
-    }
-    .footer-single h5 {
-        font-size: 18px;
-        color: #fff;
-    }
-    .footer-single a:hover {
-        color: #fff !important;
-    }
-    .footer-logo img {
-        max-height: 55px;
-    }
-    .hover:hover {
-        color: #0d6efd !important;
-    }
+        .partner-logo {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 30px 20px;
+            /* tambah ruang atas-bawah */
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-6px) scale(1.08);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .partner-logo:hover .partner-img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
 
         .edu-card {
-        transition: all .3s ease;
-    }
-    .edu-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 1rem 2rem rgba(0,0,0,.15) !important;
-    }
-    .text-truncate {
-        display: -webkit-box;
-        -webkit-line-clamp: 2; 
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
 
-.article-wrapper {
-    margin-top: 120px; /* sesuaikan tinggi header */
-}
+        .edu-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
 
-/* Tablet */
-@media (max-width: 991px) {
-    .article-wrapper {
-        margin-top: 90px;
-    }
+        .edu-thumb {
+            position: relative;
+            overflow: hidden;
+        }
 
-    /* matikan sticky biar turun normal */
-    .article-wrapper .position-sticky {
-        position: static !important;
-        top: auto !important;
-        margin-bottom: 1rem; /* kasih jarak */
-    }
-}
+        .edu-thumb img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
 
-/* Mobile */
-/* Mobile */
-@media (max-width: 576px) {
-    .article-wrapper {
-        margin-top: 100px; /* tambah jarak biar gak mepet header */
-    }
+        .edu-card:hover .edu-thumb img {
+            transform: scale(1.08);
+        }
 
-    .article-wrapper .position-sticky {
-        position: static !important;
-        top: auto !important;
-        margin-bottom: 1rem;
-    }
-}
+        .edu-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
 
-.ratio_klik iframe {
-    pointer-events: none;
-}
+        .edu-content {
+            padding: 20px;
+            flex: 1;
+        }
 
-     </style>
+        .edu-content h5 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .edu-content p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        /* spacing antar section biar lega */
+        .py-120 {
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+
+        .edu-video-area iframe {
+            border: 0;
+        }
+
+        /* Responsif biar logo nggak kegedean di layar kecil */
+        @media (max-width: 576px) {
+            .partner-img {
+                max-height: 70px;
+            }
+
+            .partner-logo {
+                padding: 20px 15px;
+                /* lebih kecil di HP */
+            }
+        }
+
+        .footer-area {
+            background: #1d1f27;
+        }
+
+        .footer-single h5 {
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .footer-single a:hover {
+            color: #fff !important;
+        }
+
+        .footer-logo img {
+            max-height: 55px;
+        }
+
+        .hover:hover {
+            color: #0d6efd !important;
+        }
+
+        .edu-card {
+            transition: all .3s ease;
+        }
+
+        .edu-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, .15) !important;
+        }
+
+        .text-truncate {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-wrapper {
+            margin-top: 120px;
+            /* sesuaikan tinggi header */
+        }
+
+        /* Tablet */
+        @media (max-width: 991px) {
+            .article-wrapper {
+                margin-top: 90px;
+            }
+
+            /* matikan sticky biar turun normal */
+            .article-wrapper .position-sticky {
+                position: static !important;
+                top: auto !important;
+                margin-bottom: 1rem;
+                /* kasih jarak */
+            }
+        }
+
+        /* Mobile */
+        /* Mobile */
+        @media (max-width: 576px) {
+            .article-wrapper {
+                margin-top: 100px;
+                /* tambah jarak biar gak mepet header */
+            }
+
+            .article-wrapper .position-sticky {
+                position: static !important;
+                top: auto !important;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .ratio_klik iframe {
+            pointer-events: none;
+        }
+    </style>
 
     <!-- Title -->
     <title>Benih Bahagia</title>
 </head>
-<body data-bs-spy="scroll"
-      data-bs-target="#navbar-example2"
-      data-bs-root-margin="0px 0px -40%"
-      data-bs-smooth-scroll="true"
-      class="scrollspy-example"
-      tabindex="0">
+
+<body data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%"
+    data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
 
 
     @yield('content')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JS Files -->
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -236,7 +265,13 @@
     <script src="{{ asset('assets/js/custom/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/custom/echarts.js') }}"></script>
     <script src="{{ asset('assets/js/custom/custom.js') }}"></script>
+    <script src="{{ asset('assets/landing_page/js/edit_header.js') }}"></script>
+    <script src="{{ asset('assets/landing_page/js/edit_hero.js') }}"></script>
+    <script src="{{ asset('assets/landing_page/js/edit_partner.js') }}"></script>
+
+ 
 
     @stack('scripts')
 </body>
+
 </html>

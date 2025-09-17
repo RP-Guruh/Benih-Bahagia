@@ -11,6 +11,7 @@ use App\Http\Controllers\LandingPage\LandingController;
 use App\Http\Controllers\User\UserTerdaftarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\SettingLandingController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,6 +34,12 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::get('/dashboard/anak-by-age', [DashboardController::class, 'anakByAge'])->name('dashboard.by.age');
+
+
+    Route::post('/admin/update-header', [SettingLandingController::class, 'updateHeader'])->name('admin.updateHeader');
+    Route::post('/admin/update-hero', [SettingLandingController::class, 'updateHero'])->name('admin.updateHero');
+    Route::post('/admin/update-partners-section', [SettingLandingController::class, 'updatePartner'])->name('admin.updatePartner');
+
 
 
     Route::get('/test', [TestController::class, 'index'])->middleware('can-access:test,view');
@@ -90,6 +97,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('change-password', ChangePasswordController::class)->names('change-password');
 
+    
 });
 
 require __DIR__ . '/auth.php';

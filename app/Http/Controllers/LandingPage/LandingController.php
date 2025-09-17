@@ -6,14 +6,57 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Video;
+use App\Models\Setting;
 
 class LandingController extends Controller
 {
     public function index()
     {
+        // Header
+        $header = Setting::where('key', 'header')->first();
+        $contents['navbar_title'] = $header->title ?? 'Benih Bahagia';
+        $contents['navbar_logo']  = $header->logo
+            ? asset($header->logo)
+            : asset('assets/landing_page/images/logo-cropeed.png');
+
+        // Hero
+        $hero = Setting::where('key', 'hero')->first();
+        $hero_texts = json_decode($hero->title ?? '{}', true);
+
+        $contents['hero_title']       = $hero_texts['title'] ?? 'Pantau Tumbuh Kembang Anak dengan Mudah';
+        $contents['hero_subtitle']    = $hero_texts['subtitle'] ?? 'Aplikasi Benih Bahagia membantu guru memantau perkembangan murid secara digital, menyajikan data perkembangan anak dengan cara yang jelas, terstruktur, dan mudah dipahami.';
+        $contents['hero_button_text'] = $hero_texts['button_text'] ?? 'Mulai Sekarang - Gratis';
+        $contents['hero_image']       = $hero->logo 
+            ? asset($hero->logo) 
+            : asset('assets/landing_page/images/3.png');
+
+        $settings = Setting::where('key', 'partner')->first();
+
+        $titleData = json_decode($settings->title ?? '{}', true);
+        $logosData = json_decode($settings->logo ?? '[]', true);
+        $defaultLogos = [
+            'assets/landing_page/images/logo_kemdikbud.png',
+            'assets/landing_page/images/logo_kemenkes.png',
+            'assets/landing_page/images/logo_uima.png',
+            'assets/landing_page/images/logo_berdampak.png',
+        ];
+
+        if (empty($logosData) || empty($logosData['logos'])) {
+            $logosData = ['logos' => $defaultLogos];
+        }
+        $contents['partners'] = [
+            'title' => $titleData['title'] ?? 'Asosiasi & Kolaborasi',
+            'subtitle' => $titleData['subtitle'] ?? 'Didukung oleh Perguruan Tinggi & Lembaga Akademik',
+            'description' => $titleData['description'] ?? 'Kolaborasi ini memastikan aplikasi memiliki dasar ilmiah yang kuat.',
+            'logos' => $logosData,
+        ];
+   
+
+
+      
         $articles = Article::orderBy("created_at","desc")->limit(8)->get();
         $video = Video::orderBy("created_at","desc")->limit(8)->get();
-        return view('landing_page.landing', compact('articles','video'));
+        return view('landing_page.landing', compact('articles','video', 'contents'));
     }
 
     public function article($id) {

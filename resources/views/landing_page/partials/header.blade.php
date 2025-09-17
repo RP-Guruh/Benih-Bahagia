@@ -1,14 +1,26 @@
 <nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top" id="navbar">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-            <img src="{{ asset('assets/landing_page/images/logo-cropeed.png') }}"
-                 alt="Logo Benih"
-                 class="img-fluid"
-                 style="max-height: 65px; width:auto;">
-            <span class="fw-bold ms-2 baloo-2-logo" style="color:#524FD9; font-size:28px;">
-                Benih Bahagia
-            </span>
+        <img src="{{ $contents['navbar_logo'] ?? asset('assets/landing_page/images/logo-cropeed.png') }}"
+            alt="Logo Benih"
+            class="img-fluid editable-logo"
+            style="max-height: 65px; width:auto;">
+
+        <span class="fw-bold ms-2 baloo-2-logo editable-title"
+            style="color:#524FD9; font-size:28px;">
+            {{ $contents['navbar_title'] ?? 'Benih Bahagia' }}
+        </span>
+
         </a>
+
+        @auth
+            @if(in_array(Auth::user()->level_id, [1,3]))
+                <button id="edit-header" class="btn btn-sm btn-outline-primary ms-2">
+                    <i class="ri-edit-2-line"></i> Edit
+                </button>
+            @endif
+        @endauth
+
 
         <!-- Toggle Mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -41,3 +53,32 @@
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="headerEditModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="headerEditForm" enctype="multipart/form-data">
+      @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Header Bar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="siteTitle" class="form-label">Judul</label>
+            <input type="text" class="form-control" id="siteTitle" name="title" 
+                   value="{{ $contents['navbar_title'] ?? 'Benih Bahagia' }}">
+          </div>
+          <div class="mb-3">
+            <label for="siteLogo" class="form-label">Logo</label>
+            <input type="file" class="form-control" id="siteLogo" name="logo">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
