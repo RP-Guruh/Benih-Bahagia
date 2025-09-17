@@ -2,25 +2,55 @@
     <div class="container">
         <div class="section-title">
             <span class="top-title">
-                <span class="editable-feature-subtitle">{{ $contents['features']['subtitle'] ?? 'Keunggulan Kami' }}</span>
+                <span class="editable-feature-subtitle">Keunggulan Kami</span>
             </span>
-            <h2 class="editable-feature-title">{{ $contents['features']['title'] ?? 'Membantu Guru dalam Memantau Perkembangan Anak' }}</h2>
+            <h2 class="editable-feature-title">Membantu Guru dalam Memantau Perkembangan Anak</h2>
         </div>
 
         <div class="row justify-content-center" id="featureItems">
-            @foreach($contents['features']['features'] as $item)
-                <div class="col-lg-4 col-md-6 feature-item">
-                    <div class="key-features-single-item">
-                        <i class="material-symbols-outlined wh-87 d-inline-block {{ $item['icon_class'] ?? 'bg-primary bg-opacity-25 text-primary' }} editable-feature-icon">
-                            {!! $item['icon'] !!}
-                        </i>
-                        <h3 class="editable-feature-heading">{!! $item['heading'] !!}</h3>
-                        <p class="editable-feature-desc" style="font-size:16px;">
-                            {{ $item['desc'] }}
-                        </p>
-                    </div>
+            <!-- Skrinning -->
+            <div class="col-lg-4 col-md-6 feature-item">
+                <div class="key-features-single-item">
+                    <i class="material-symbols-outlined wh-87 bg-primary bg-opacity-25 d-inline-block text-primary editable-feature-icon">
+                        fact_check
+                    </i>
+                    <h3 class="editable-feature-heading">Skrinning</h3>
+                    <p class="editable-feature-desc" style="font-size:16px;">
+                        Guru dapat melakukan skrining perkembangan anak dengan mudah
+                        menggunakan instrumen digital yang terstruktur dan praktis.
+                    </p>
                 </div>
-            @endforeach
+            </div>
+
+            <!-- Edukasi -->
+            <div class="col-lg-4 col-md-6 feature-item">
+                <div class="key-features-single-item">
+                    <i class="material-symbols-outlined wh-87 bg-success bg-opacity-25 d-inline-block text-success editable-feature-icon">
+                        school
+                    </i>
+                    <h3 class="editable-feature-heading">Edukasi</h3>
+                    <p class="editable-feature-desc" style="font-size:16px;">
+                        Menyediakan materi edukatif bagi guru dan orang tua untuk
+                        mendukung proses tumbuh kembang anak secara optimal.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Konsultasi -->
+            <div class="col-lg-4 col-md-6 feature-item">
+                <div class="key-features-single-item position-relative">
+                    <i class="material-symbols-outlined wh-87 bg-warning bg-opacity-25 d-inline-block text-warning editable-feature-icon">
+                        support_agent
+                    </i>
+                    <h3 class="editable-feature-heading">
+                        Konsultasi
+                    </h3>
+                    <p class="editable-feature-desc" style="font-size:16px;">
+                        Fitur konsultasi akan memudahkan guru berkomunikasi dengan ahli atau orang tua,
+                        sehingga intervensi dapat dilakukan lebih cepat dan tepat.
+                    </p>
+                </div>
+            </div>
         </div>
 
         <!-- Tombol Edit -->
@@ -37,42 +67,32 @@
 </div>
 
 
-<!-- Modal Edit Features -->
 <div class="modal fade" id="editFeaturesModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form id="editFeaturesForm">
+      <form id="featureSectionForm">
         <div class="modal-header">
-          <h5 class="modal-title">Edit Features</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title">Edit Features Section</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
         <div class="modal-body">
-          <!-- Subtitle -->
+
           <div class="mb-3">
-            <label class="form-label">Subtitle</label>
-            <input type="text" class="form-control" id="featureSubtitle" name="subtitle">
+            <label>Section Subtitle</label>
+            <input type="text" name="subtitle" id="featureSubtitle" class="form-control">
           </div>
 
-          <!-- Title -->
           <div class="mb-3">
-            <label class="form-label">Title</label>
-            <input type="text" class="form-control" id="featureTitle" name="title">
+            <label>Section Title</label>
+            <input type="text" name="title" id="featureTitle" class="form-control">
           </div>
 
-          <!-- Items -->
-          <div id="featureItemsForm">
-            <!-- Dinamis ditambah via JS -->
-          </div>
+          <div id="featureItemsForm"></div>
 
-          <button type="button" id="addFeatureItem" class="btn btn-outline-primary btn-sm mt-2">
-            <i class="ri-add-line me-1"></i> Tambah Feature
-          </button>
         </div>
-
         <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Simpan</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
         </div>
       </form>
     </div>

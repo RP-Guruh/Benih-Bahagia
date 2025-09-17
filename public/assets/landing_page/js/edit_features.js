@@ -1,5 +1,7 @@
+
 $(document).ready(function () {
-    // Buka modal edit features
+
+
     $('#edit-features-section').on('click', function(){
         $('#featureSubtitle').val($('.editable-feature-subtitle').text().trim());
         $('#featureTitle').val($('.editable-feature-title').text().trim());

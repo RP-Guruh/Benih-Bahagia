@@ -5,7 +5,8 @@ $(document).ready(function () {
         $('#aboutDesc').val($('.editable-about-desc').text().trim());
 
         $('#aboutItemsForm').empty();
-        $('#aboutItems li').each(function () {
+
+        $('#aboutItems li').each(function (i) { // <-- tambahkan index i
             let heading = $(this).find('.editable-about-heading').html().trim();
             let desc = $(this).find('.editable-about-item-desc').text().trim();
 
@@ -13,11 +14,11 @@ $(document).ready(function () {
                 <div class="about-item border rounded p-3 mb-2">
                     <div class="mb-2">
                         <label class="form-label">Heading</label>
-                        <input type="text" class="form-control" name="items[][heading]" value="${heading}">
+                        <input type="text" class="form-control" name="items[${i}][heading]" value="${heading}">
                     </div>
                     <div class="mb-2">
                         <label class="form-label">Deskripsi</label>
-                        <textarea class="form-control" name="items[][desc]" rows="2">${desc}</textarea>
+                        <textarea class="form-control" name="items[${i}][desc]" rows="2">${desc}</textarea>
                     </div>
                     <button type="button" class="btn btn-sm btn-danger removeAboutItem">
                         <i class="ri-delete-bin-line"></i> Hapus
@@ -31,15 +32,16 @@ $(document).ready(function () {
 
     // Tambah item baru
     $('#addAboutItem').on('click', function () {
+        let i = $('#aboutItemsForm .about-item').length; // ambil index terakhir
         $('#aboutItemsForm').append(`
             <div class="about-item border rounded p-3 mb-2">
                 <div class="mb-2">
                     <label class="form-label">Heading</label>
-                    <input type="text" class="form-control" name="items[][heading]">
+                    <input type="text" class="form-control" name="items[${i}][heading]">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Deskripsi</label>
-                    <textarea class="form-control" name="items[][desc]" rows="2"></textarea>
+                    <textarea class="form-control" name="items[${i}][desc]" rows="2"></textarea>
                 </div>
                 <button type="button" class="btn btn-sm btn-danger removeAboutItem">
                     <i class="ri-delete-bin-line"></i> Hapus
@@ -51,6 +53,11 @@ $(document).ready(function () {
     // Hapus item
     $(document).on('click', '.removeAboutItem', function () {
         $(this).closest('.about-item').remove();
+        // Re-index items agar tetap konsisten saat submit
+        $('#aboutItemsForm .about-item').each(function(i){
+            $(this).find('input[name*="[heading]"]').attr('name', `items[${i}][heading]`);
+            $(this).find('textarea[name*="[desc]"]').attr('name', `items[${i}][desc]`);
+        });
     });
 
     // Submit form

@@ -15,9 +15,8 @@ class LandingController extends Controller
         // Header
         $header = Setting::where('key', 'header')->first();
         $contents['navbar_title'] = $header->title ?? 'Benih Bahagia';
-        $contents['navbar_logo']  = $header->logo
-            ? asset($header->logo)
-            : asset('assets/landing_page/images/logo-cropeed.png');
+        $contents['navbar_logo']  = $header->logo ?? 'assets/landing_page/images/logo-cropeed.png';
+        $contents['navbar_logo']  = asset($contents['navbar_logo']);
 
         // Hero
         $hero = Setting::where('key', 'hero')->first();
@@ -26,8 +25,8 @@ class LandingController extends Controller
         $contents['hero_title']       = $hero_texts['title'] ?? 'Pantau Tumbuh Kembang Anak dengan Mudah';
         $contents['hero_subtitle']    = $hero_texts['subtitle'] ?? 'Aplikasi Benih Bahagia membantu guru memantau perkembangan murid secara digital, menyajikan data perkembangan anak dengan cara yang jelas, terstruktur, dan mudah dipahami.';
         $contents['hero_button_text'] = $hero_texts['button_text'] ?? 'Mulai Sekarang - Gratis';
-        $contents['hero_image']       = $hero->logo 
-            ? asset($hero->logo) 
+        $contents['hero_image'] = isset($hero) && $hero->logo
+            ? asset($hero->logo)
             : asset('assets/landing_page/images/3.png');
 
         $settings = Setting::where('key', 'partner')->first();
@@ -87,33 +86,36 @@ class LandingController extends Controller
 
         // About App
         $settingsAbout = Setting::where('key', 'about_app')->first();
-        $aboutData = json_decode($settingsAbout->value ?? '{}', true);
+        $aboutData = json_decode($settingsAbout->title ?? '{}', true);
+        $aboutImage = json_decode($settingsAbout->logo ?? '{}', true);
 
         $contents['about_app'] = [
             'image' => $aboutData['image'] ?? 'assets/landing_page/images/produk-1.png',
             'title' => $aboutData['title'] ?? 'Aplikasi Pemantauan Tumbuh Kembang Anak',
-            'description' => $aboutData['description'] ?? 'Aplikasi ini dirancang untuk membantu guru ...',
-            'features' => $aboutData['features'] ?? [
+            'description' => $aboutData['description'] ?? 'Aplikasi ini dirancang untuk membantu <strong>guru</strong> dalam melakukan pemantauan 
+                        tumbuh kembang anak secara lebih mudah, terstruktur, dan berbasis teknologi. 
+                        Dengan fitur skrining, edukasi, dan konsultasi, guru dapat memperoleh gambaran perkembangan 
+                        anak dan memberikan dukungan yang tepat.',
+     
+            'features' => $aboutImage['items'] ?? [
                 [
-                    'title' => 'Mudah Digunakan',
-                    'description' => 'Antarmuka sederhana yang memudahkan guru mengisi data perkembangan anak tanpa rumit.'
+                    'heading' => 'Mudah Digunakan',
+                    'desc' => 'Antarmuka sederhana yang memudahkan guru mengisi data perkembangan anak tanpa rumit.'
                 ],
                 [
-                    'title' => 'Berbasis Ilmiah',
-                    'description' => 'Dikembangkan dengan instrumen akademik dari dosen dan praktisi pendidikan anak.'
+                    'heading' => 'Berbasis Ilmiah',
+                    'desc' => 'Dikembangkan dengan instrumen akademik dari dosen dan praktisi pendidikan anak.'
                 ],
                 [
-                    'title' => 'Dukungan Edukasi',
-                    'description' => 'Menyediakan materi belajar untuk guru dan orang tua agar lebih memahami tahap tumbuh kembang.'
+                    'heading' => 'Dukungan Edukasi',
+                    'desc' => 'Menyediakan materi belajar untuk guru dan orang tua agar lebih memahami tahap tumbuh kembang.'
                 ],
                 [
-                    'title' => 'Konsultasi dengan Ahli',
-                    'description' => 'Rencananya fitur konsultasi akan memudahkan komunikasi guru dengan tenaga profesional.',
-                    'badge' => 'Soon'
+                    'heading' => 'Konsultasi dengan Ahli',
+                    'desc' => 'Rencananya fitur konsultasi akan memudahkan komunikasi guru dengan tenaga profesional.',
                 ],
             ],
         ];
-   
         $articles = Article::orderBy("created_at","desc")->limit(8)->get();
         $video = Video::orderBy("created_at","desc")->limit(8)->get();
         return view('landing_page.landing', compact('articles','video', 'contents'));

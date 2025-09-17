@@ -4,26 +4,29 @@
             <!-- Gambar ilustrasi -->
             <div class="col-lg-6">
                 <div class="tailor-img">
-                    <img src="{{ asset('assets/landing_page/images/produk-1.png') }}" alt="Ilustrasi aplikasi">
+                    <img src="{{ asset($contents['about_app']['image'] ?? 'assets/landing_page/images/produk-1.png') }}" 
+                         alt="Ilustrasi aplikasi">
                 </div>
             </div>
 
             <!-- Konten penjelasan -->
             <div class="col-lg-6">
                 <div class="tailor-content">
-                    <h2 class="editable-about-title">{{ $contents['about_app']['title'] }}</h2>
-                    <p class="mb-4 editable-about-desc">{{ $contents['about_app']['description'] }}</p>
-
+                    <h2 class="editable-about-title">{{ $contents['about_app']['title'] ?? 'Judul Aplikasi' }}</h2>
+                    <p class="mb-4 editable-about-desc">
+                        {!! $contents['about_app']['description'] ?? 'Deskripsi aplikasi belum tersedia.' !!}
+                    </p>
+                  
                     <ul class="ps-0 mb-0 list-unstyled" id="aboutItems">
-                        @foreach($contents['about_app']['items'] as $item)
+                        @foreach($contents['about_app']['features'] ?? [] as $item)
                         <li>
                             <div class="d-flex">
                                 <div class="flex-shrink-0">
                                     <i class="material-symbols-outlined fs-20 text-primary">done_outline</i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h3 class="editable-about-heading">{!! $item['heading'] !!}</h3>
-                                    <p class="editable-about-item-desc">{{ $item['desc'] }}</p>
+                                    <h3 class="editable-about-heading">{!! $item['heading'] ?? '' !!}</h3>
+                                    <p class="editable-about-item-desc">{{ $item['desc'] ?? '' }}</p>
                                 </div>
                             </div>
                         </li>
@@ -34,7 +37,9 @@
         </div>
     </div>
 
+    <!-- dekorasi -->
     <img src="{{ asset('assets/landing_page/images/shape-1.png') }}" class="shape shape-1" alt="shape">
+
 
     @if(auth()->check() && in_array(auth()->user()->level_id, [1,3]))
     <div class="text-center mt-3">

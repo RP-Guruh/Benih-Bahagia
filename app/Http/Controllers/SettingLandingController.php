@@ -218,6 +218,48 @@ class SettingLandingController extends Controller
         ]);
     }
 
+    public function updateAboutApp(Request $request)
+    {
+        if (!in_array(auth()->user()->level_id, [1,3])) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $settings = Setting::firstOrCreate(['key' => 'about_app']);
+
+        $title       = trim(str_replace(["\r","\n"], ' ', $request->title));
+        $description = trim(str_replace(["\r","\n"], ' ', $request->description));
+    
+        $items = [];
+        if ($request->has('items')) {
+            foreach ($request->items as $item) {
+                
+                if (!empty($item['heading']) || !empty($item['desc'])) {
+                    $items[] = [
+                        'heading' => trim($item['heading']),
+                        'desc'    => trim($item['desc']),
+                    ];
+                }
+            }
+        }
+
+        $settings->title = json_encode([
+            'title'       => $title ?: 'Aplikasi Pemantauan Tumbuh Kembang Anak',
+            'description' => $description ?: 'Aplikasi ini dirancang untuk membantu guru dalam melakukan pemantauan tumbuh kembang anak.',
+        ], JSON_UNESCAPED_UNICODE);
+
+        $settings->logo = json_encode([
+            'items' => $items,
+        ], JSON_UNESCAPED_UNICODE);
+
+        $settings->save();
+
+        return response()->json([
+            'title'       => $title,
+            'description' => $description,
+            'items'       => $items,
+        ]);
+    }
+
 
 
 

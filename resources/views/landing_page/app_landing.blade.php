@@ -269,8 +269,8 @@
     <script src="{{ asset('assets/landing_page/js/edit_hero.js') }}"></script>
     <script src="{{ asset('assets/landing_page/js/edit_partner.js') }}"></script>
     <script src="{{ asset('assets/landing_page/js/edit_features.js') }}"></script>
+    <script src="{{ asset('assets/landing_page/js/edit_aboutapp.js') }}"></script>
 
-    
 
     @stack('scripts')
 </body>
