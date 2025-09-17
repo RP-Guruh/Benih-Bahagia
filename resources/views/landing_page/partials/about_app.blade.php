@@ -11,64 +11,77 @@
             <!-- Konten penjelasan -->
             <div class="col-lg-6">
                 <div class="tailor-content">
-                    <h2>Aplikasi Pemantauan Tumbuh Kembang Anak</h2>
-                    <p class="mb-4">
-                        Aplikasi ini dirancang untuk membantu <strong>guru</strong> dalam melakukan pemantauan 
-                        tumbuh kembang anak secara lebih mudah, terstruktur, dan berbasis teknologi. 
-                        Dengan fitur skrining, edukasi, dan konsultasi, guru dapat memperoleh gambaran perkembangan 
-                        anak dan memberikan dukungan yang tepat.
-                    </p>
-                    <ul class="ps-0 mb-0 list-unstyled">
+                    <h2 class="editable-about-title">{{ $contents['about_app']['title'] }}</h2>
+                    <p class="mb-4 editable-about-desc">{{ $contents['about_app']['description'] }}</p>
+
+                    <ul class="ps-0 mb-0 list-unstyled" id="aboutItems">
+                        @foreach($contents['about_app']['items'] as $item)
                         <li>
                             <div class="d-flex">
                                 <div class="flex-shrink-0">
                                     <i class="material-symbols-outlined fs-20 text-primary">done_outline</i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h3>Mudah Digunakan</h3>
-                                    <p>Antarmuka sederhana yang memudahkan guru mengisi data perkembangan anak tanpa rumit.</p>
+                                    <h3 class="editable-about-heading">{!! $item['heading'] !!}</h3>
+                                    <p class="editable-about-item-desc">{{ $item['desc'] }}</p>
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <i class="material-symbols-outlined fs-20 text-primary">done_outline</i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h3>Berbasis Ilmiah</h3>
-                                    <p>Dikembangkan dengan instrumen akademik dari dosen dan praktisi pendidikan anak.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <i class="material-symbols-outlined fs-20 text-primary">done_outline</i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h3>Dukungan Edukasi</h3>
-                                    <p>Menyediakan materi belajar untuk guru dan orang tua agar lebih memahami tahap tumbuh kembang.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <i class="material-symbols-outlined fs-20 text-primary">done_outline</i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h3>Konsultasi dengan Ahli <span class="badge bg-secondary fs-12 ms-1">Soon</span></h3>
-                                    <p>Rencananya fitur konsultasi akan memudahkan komunikasi guru dengan tenaga profesional.</p>
-                                </div>
-                            </div>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- dekorasi -->
     <img src="{{ asset('assets/landing_page/images/shape-1.png') }}" class="shape shape-1" alt="shape">
+
+    @if(auth()->check() && in_array(auth()->user()->level_id, [1,3]))
+    <div class="text-center mt-3">
+        <button id="edit-about-section" class="btn btn-primary d-inline-flex align-items-center gap-2">
+            <i class="ri-edit-2-fill me-1"></i> Edit About App
+        </button>
+    </div>
+    @endif
+</div>
+
+<!-- Modal Edit About App -->
+<div class="modal fade" id="editAboutModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form id="editAboutForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit About App</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Title -->
+          <div class="mb-3">
+            <label class="form-label">Judul</label>
+            <input type="text" class="form-control" id="aboutTitle" name="title">
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label class="form-label">Deskripsi</label>
+            <textarea class="form-control" id="aboutDesc" name="description" rows="3"></textarea>
+          </div>
+
+          <!-- Items -->
+          <div id="aboutItemsForm">
+          </div>
+
+          <button type="button" id="addAboutItem" class="btn btn-outline-primary btn-sm mt-2">
+            <i class="ri-add-line me-1"></i> Tambah Item
+          </button>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

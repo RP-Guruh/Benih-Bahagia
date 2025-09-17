@@ -84,6 +84,35 @@ class LandingController extends Controller
             'items' => $imageFeatures['features'] ?? $defaultFeatures,
         ];
 
+
+        // About App
+        $settingsAbout = Setting::where('key', 'about_app')->first();
+        $aboutData = json_decode($settingsAbout->value ?? '{}', true);
+
+        $contents['about_app'] = [
+            'image' => $aboutData['image'] ?? 'assets/landing_page/images/produk-1.png',
+            'title' => $aboutData['title'] ?? 'Aplikasi Pemantauan Tumbuh Kembang Anak',
+            'description' => $aboutData['description'] ?? 'Aplikasi ini dirancang untuk membantu guru ...',
+            'features' => $aboutData['features'] ?? [
+                [
+                    'title' => 'Mudah Digunakan',
+                    'description' => 'Antarmuka sederhana yang memudahkan guru mengisi data perkembangan anak tanpa rumit.'
+                ],
+                [
+                    'title' => 'Berbasis Ilmiah',
+                    'description' => 'Dikembangkan dengan instrumen akademik dari dosen dan praktisi pendidikan anak.'
+                ],
+                [
+                    'title' => 'Dukungan Edukasi',
+                    'description' => 'Menyediakan materi belajar untuk guru dan orang tua agar lebih memahami tahap tumbuh kembang.'
+                ],
+                [
+                    'title' => 'Konsultasi dengan Ahli',
+                    'description' => 'Rencananya fitur konsultasi akan memudahkan komunikasi guru dengan tenaga profesional.',
+                    'badge' => 'Soon'
+                ],
+            ],
+        ];
    
         $articles = Article::orderBy("created_at","desc")->limit(8)->get();
         $video = Video::orderBy("created_at","desc")->limit(8)->get();

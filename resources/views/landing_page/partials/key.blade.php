@@ -8,7 +8,7 @@
         </div>
 
         <div class="row justify-content-center" id="featureItems">
-            @foreach($contents['features']['items'] as $item)
+            @foreach($contents['features']['features'] as $item)
                 <div class="col-lg-4 col-md-6 feature-item">
                     <div class="key-features-single-item">
                         <i class="material-symbols-outlined wh-87 d-inline-block {{ $item['icon_class'] ?? 'bg-primary bg-opacity-25 text-primary' }} editable-feature-icon">
